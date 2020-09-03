@@ -2,7 +2,9 @@
 
 The easier way to manage environments and flags.
 
-## Installation
+## User guide
+
+#### Installation
 
 Load extension:
 - download zip and extract it **to folder**
@@ -21,14 +23,12 @@ Pin extension
 
 **Done!**
 
-## User guide
-
-### "Info" section
+#### "Info" section
 
 Just a basic info about the open publication in the Editor: publication name,
 publication id, page id and environment that you're currently on.
 
-### "Flags" section
+#### "Flags" section
 
 You can override local storage flags here.
 
@@ -43,7 +43,7 @@ You can override local storage flags here.
 When you are done with the changes, please click "Save and reload" button, because Editor needs to reload to
 collect flags from local storage.
 
-### "Open with..." section
+#### "Open with..." section
 
 Here you can open things in the tab.
 
@@ -60,4 +60,15 @@ If Previewer:
 - you can choose the **API** (this is not available for "editor" option because we have to set the API flag in the local storage like explained above)
 
 This section will remember your preference for all fields except for publication id. That id is always the one from the editor.
+
+## Developer guide
+
+- checkout
+- `yarn`
+- all things related to extension are in `extension` folder, except the source for the Popup
+- the source for the Popup is `typescript` in the `src` folder
+- to build it, use `yarn build` which will place a `bundle.js` in `extension/popup/bundle` which is already included in `index.html`
+- just like the installation guide above, make sure to Load unpacked the `extension` folder (or reload the extension on reload button if already loaded) and reload the Editor tab
+- for debugging the Popup, right click on Popup > Inspect
+- for debugging the Content script, find the Content script in the Editor's dev tools, Sources section
 
