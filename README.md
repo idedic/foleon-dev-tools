@@ -11,14 +11,14 @@ The easier way to manage environments and flags.
 Load extension:
 - download zip and extract it **to folder**
 - open Chrome settings and click Extensions in the bottom left
-- in Extensions tab, click on Developer mode in upper right
+- in the Extensions tab, click on Developer mode in upper right
 - then click on Load unpacked on the upper left
 - navigate to the folder from the first step
 - *Foleon dev tools are now installed!*
 
 Pin extension
-- click on the puzzle icon in upper right, just besides the profile icon
-- find Foleon dev tools in click on Pin icon
+- click on the puzzle icon in the upper right, just beside the profile icon
+- find Foleon dev tools and click on the Pin icon
 - *now you'll always see the icon*
 
 **Go to the Editor window and refresh the page.**
@@ -27,8 +27,8 @@ Pin extension
 
 ### 🗂 "Info" section
 
-Just a basic info about the open publication in the Editor: publication name,
-publication id, page id and environment that you're currently on.
+Just basic info about the open publication in the Editor: publication name,
+publication id, page id, and environment that you're currently on.
 
 ### 🗂 "Flags" section
 
@@ -36,27 +36,27 @@ You can override local storage flags here.
 
 **API**: set the API that you wish to connect Editor to.
 
-**Preview button**: enable if you want to see `Dev-Preview` button.
+**Preview button**: enable if you want to see the `Dev-Preview` button.
 
-**Previewer**: override the environment that `Dev-Preview` button will open.
+**Previewer**: override the environment that the `Dev-Preview` button will open.
 
 **Debugger**: enable debugger in the Editor (little worm icon and buttons on activity indicator)
 
-When you are done with the changes, please click "Save and reload" button, because Editor needs to reload to
+When you are done with the changes, please click the "Save and reload" button, because Editor needs to reload to
 collect flags from local storage.
 
 Note: if you see `default` it means that there's no flag in the Editor's local storage, and it uses whatever is a default for that environment.
-If you set `deafult` it will remove that flag from the local storage.
+If you set `default` it will remove that flag from the local storage.
 
 ### 🗂 "Open with..." section
 
-Here you can open things in the tab.
+Here you can open things in the new tab.
 
-First you choose if you want **Editor or Previewer**.
+First, you choose if you want **Editor or Previewer**.
 
 If Editor:
 - you can choose the **environment**
-- click on the button will open current publication and page in chosen environment
+- click on the button will open the current publication and page in the chosen environment
 - keep in mind that, if that environment is not with the same API as your current, you'll need to open Foleon Dev Tools in that tab, set the API from the "Flags" section and click "Save and reload"
 
 If Previewer:
@@ -70,10 +70,9 @@ This section will remember your preference for all fields except for publication
 
 - checkout
 - `yarn`
-- all things related to extension are in `extension` folder, except the source for the Popup
+- all things related to the extension are in `extension` folder, except the source for the Popup
 - the source for the Popup is `typescript` in the `src` folder
 - to build it, use `yarn build` which will place a `bundle.js` in `extension/popup/bundle` which is already included in `index.html`
 - just like the installation guide above, make sure to Load unpacked the `extension` folder (or reload the extension on reload button if already loaded) and reload the Editor tab
-- for debugging the Popup, right click on Popup > Inspect
+- for debugging the Popup, right-click on Popup > Inspect
 - for debugging the Content script, find the Content script in the Editor's dev tools, Sources section
-
