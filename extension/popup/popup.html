@@ -37,7 +37,14 @@
           </select>
         </p>
         <p>
-          <label class="lbl">Previewer</label>
+          <label class="lbl">Dev-Preview btn</label>
+          <span class="onoffswitch">
+            <input id="previewBtn" type="checkbox" class="onoffswitch-checkbox">
+            <label class="onoffswitch-label" for="previewBtn"></label>
+          </span>
+        </p>
+        <p>
+          <label class="lbl">Dev-Preview env</label>
           <select id="previewer">
             <option value="default" selected>default</option>
             <option disabled>---------</option>
@@ -47,13 +54,6 @@
             <option id="previewerCustomDivider" disabled>---------</option>
             <!-- don't add anything here! -->
           </select>
-        </p>
-        <p>
-          <label class="lbl">Preview button</label>
-          <span class="onoffswitch">
-            <input id="previewBtn" type="checkbox" class="onoffswitch-checkbox">
-            <label class="onoffswitch-label" for="previewBtn"></label>
-          </span>
         </p>
         <p>
           <label class="lbl">Debugger</label>
@@ -75,6 +75,7 @@
           <select id="owApp">
             <option value="editor" selected>editor</option>
             <option value="previewer">previewer</option>
+            <option value="dashboard">dashboard</option>
           </select>
         </p>
         <p>

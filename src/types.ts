@@ -6,3 +6,9 @@ export interface Info {
 }
 
 export type Tab = chrome.tabs.Tab;
+
+export enum UISections {
+  logo = 'sectionLogo',
+  error = 'sectionError',
+  main = 'sectionMain',
+}

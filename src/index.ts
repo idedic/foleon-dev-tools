@@ -2,13 +2,13 @@ import $ from 'cash-dom';
 
 import { getActiveTab, sendMsgToActiveTab, createTab, reloadTab } from './chrome';
 import { set as lsSet, get as lsGet } from './ls';
-import { Info, Tab } from './types';
+import { Info, Tab, UISections } from './types';
 
 const lsKeys = {
   api: 'X-Api-Override',
   auth: 'X-Auth-Override',
-  previewer: 'X-Previewer-Override',
   previewBtn: 'X-Show-Preview-Button',
+  previewer: 'X-Previewer-Override',
   debug: 'X-EDITOR-DEBUG',
 };
 
@@ -33,12 +33,6 @@ const apiKeys = {
 
 const additionalEnvs = ['arsenije', 'zdravko', 'igor', 'slobodan', 'petar', 'anja', 'svetlana', 'maja', 'dusan'];
 
-const sections = {
-  logo: 'sectionLogo',
-  error: 'sectionError',
-  main: 'sectionMain',
-};
-
 let lsData: { [key: string]: any } = {};
 let info: Info = {};
 
@@ -46,9 +40,9 @@ let info: Info = {};
 const $info = $('#info');
 // flags card
 const $api = $('#api');
+const $previewBtn = $('#previewBtn');
 const $previewer = $('#previewer');
 const $previewerCustomDivider = $('#previewerCustomDivider');
-const $previewBtn = $('#previewBtn');
 const $debug = $('#debug');
 const $saveAndReload = $('#saveAndReload');
 // open with card
@@ -121,9 +115,9 @@ const showErrorSection = (message: string | string[]) => {
   } else if (Array.isArray(message)) {
     ui = `<div>${message.map((paragraph) => `<p>${paragraph}</p>`).join('')}</div>`;
   }
-  $(`#${sections.error}`).html(ui);
+  $(`#${UISections.error}`).html(ui);
 
-  showSection(sections.error);
+  showSection(UISections.error);
 };
 
 // ------------------------------
@@ -155,14 +149,14 @@ getActiveTab((activeTab) => {
       try {
         // flags card
         $api.val(lsData[lsKeys.api] || 'default');
-        $previewer.val(lsData[lsKeys.previewer] || 'default');
         $previewBtn.prop('checked', lsData[lsKeys.previewBtn] === 'true');
+        $previewer.val(lsData[lsKeys.previewer] || 'default');
         $debug.prop('checked', lsData[lsKeys.debug] === 'true');
 
         // open with card
         $owPubId.val(info.pubId);
 
-        showSection(sections.main);
+        showSection(UISections.main);
       } catch (e) {
         showErrorSection([
           'Something went wrong while getting the data from the Editor.',
@@ -197,7 +191,7 @@ $saveAndReload.on('click', () => {
 $owApp
   .on('change', () => {
     const app = $owApp.val();
-    if (app === 'editor') {
+    if (app === 'editor' || app === 'dashboard') {
       $owPubId.parent().hide();
       $owApi.parent().hide();
     } else {
@@ -226,6 +220,12 @@ $owOpen.on('click', () => {
       url = `https://previewer.foleon.com/?publicationId=${pubId}&api=${api}`;
     } else {
       url = `https://previewer-${env}.foleon.dev/?publicationId=${pubId}&api=${api}`;
+    }
+  } else if (app === 'dashboard') {
+    if (env === 'production') {
+      url = `https://app.foleon.com/`;
+    } else {
+      url = `https://app-${env}.foleon.dev/`;
     }
   }
 

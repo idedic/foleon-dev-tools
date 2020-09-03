@@ -36,9 +36,9 @@ You can override local storage flags here.
 
 **API**: set the API that you wish to connect Editor to.
 
-**Preview button**: enable if you want to see the `Dev-Preview` button.
+**Dev-Preview button**: enable if you want to see the `Dev-Preview` button.
 
-**Previewer**: override the environment that the `Dev-Preview` button will open.
+**Dev-Preview environment**: override the environment that the `Dev-Preview` button will open.
 
 **Debugger**: enable debugger in the Editor (little worm icon and buttons on activity indicator)
 
@@ -50,9 +50,9 @@ If you set `default` it will remove that flag from the local storage.
 
 ### 🗂 "Open with..." section
 
-Here you can open things in a new tab. Based on the "Info" (section from above), you can open current publication in the Editor or Previewer.
+Here you can open things in a new tab. You can open the Dashboard, or based on the "Info" (section from above), you can open current publication in the Editor or Previewer.
 
-First, you choose if you want **Editor or Previewer**.
+First, you choose if you want **Editor, Previewer or Dashboard**.
 
 If Editor:
 - you can choose the **environment**
@@ -63,6 +63,9 @@ If Previewer:
 - you can choose the **environment**
 - you'll see **publication id** (you can change it if you like - this is not available for "editor" option because we need to know the page id also)
 - you can choose the **API** (this is not available for "editor" option because we have to set the API flag in the local storage like explained above)
+
+If Dashboard:
+- you can choose the **environment**
 
 This section will remember your preference for all fields except for publication id. That id is always the one from the editor.
 
