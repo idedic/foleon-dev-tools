@@ -2,6 +2,8 @@
 
 The easier way to manage environments and flags.
 
+<img src="https://i.imgur.com/dbt2IWo.png" alt="screenshot" width="300">
+
 ## 🕺🏻 User guide
 
 ### 💻 Installation
@@ -42,6 +44,9 @@ You can override local storage flags here.
 
 When you are done with the changes, please click "Save and reload" button, because Editor needs to reload to
 collect flags from local storage.
+
+Note: if you see `default` it means that there's no flag in the Editor's local storage, and it uses whatever is a default for that environment.
+If you set `deafult` it will remove that flag from the local storage.
 
 ### 🗂 "Open with..." section
 
