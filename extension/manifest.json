@@ -1,0 +1,20 @@
+{
+  "name": "Foleon Dev Tools",
+  "version": "1.0",
+  "description": "Basic info! Flags! Environments!",
+  "browser_action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "images/foleon_logo_4.png"
+  },
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.foleon.dev/*", "*://*.foleon.com/*", "*://localhost/*"],
+      "js": ["content/content.js"]
+    }
+  ],
+  "icons": {
+    "128": "images/foleon_logo_4.png"
+  },
+  "manifest_version": 2
+}

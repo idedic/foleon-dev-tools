@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./extension/popup/",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "module": "es6",
+    "target": "ESNext",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node"
+  }
+}

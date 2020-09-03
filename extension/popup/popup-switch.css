@@ -1,0 +1,39 @@
+.onoffswitch {
+  display: inline-block;
+  vertical-align: middle;
+}
+/* generated */
+.onoffswitch {
+  position: relative; width: 28px;
+  -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.onoffswitch-label {
+  display: block; overflow: hidden; cursor: pointer;
+  height: 16px; padding: 0; line-height: 16px;
+  border: 1px solid var(--light); border-radius: 16px;
+  background-color: var(--baseWhite);
+  transition: background-color 0.3s ease-in;
+}
+.onoffswitch-label:before {
+  content: "";
+  display: block; width: 16px; margin: 0px;
+  background: var(--baseWhite);
+  position: absolute; top: 0; bottom: 0;
+  right: 12px;
+  border: 1px solid var(--light); border-radius: 16px;
+  transition: all 0.15s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label {
+  background-color: var(--info);
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label, .onoffswitch-checkbox:checked + .onoffswitch-label:before {
+ border-color: var(--info);
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label:before {
+  right: 0px; 
+}

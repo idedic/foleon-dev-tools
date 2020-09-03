@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet" />
+  <link href="popup-switch.css" rel="stylesheet" />
+  <link href="popup.css" rel="stylesheet" />
+  <title>Foleon Dev Tools</title>
+</head>
+
+<body>
+  <div class="bodyWrap">
+    <div class="bodyWrapTitle">Foleon dev tools</div>
+
+    <section id="sectionLogo">
+      <div></div>
+    </section>
+
+    <section id="sectionError" class="h"></section>
+
+    <section id="sectionMain" class="h">
+      <div class="card">
+        <div class="cardTitle">Info</div>
+        <p id="info"></p>
+      </div>
+
+      <div class="card">
+        <div class="cardTitle">Flags n Overrides</div>
+        <p>
+          <label class="lbl">API</label>
+          <select id="api">
+            <option value="default" selected>default</option>
+            <option disabled>---------</option>
+            <option value="https://api.foleon.com">production</option>
+            <option value="https://api-acceptance.foleon.dev">acceptance</option>
+            <option value="https://api-staging.foleon.dev">staging</option>
+          </select>
+        </p>
+        <p>
+          <label class="lbl">Previewer</label>
+          <select id="previewer">
+            <option value="default" selected>default</option>
+            <option disabled>---------</option>
+            <option value="https://previewer.foleon.com">production</option>
+            <option value="https://previewer-acceptance.foleon.dev">acceptance</option>
+            <option value="https://previewer-staging.foleon.dev">staging</option>
+            <option id="previewerCustomDivider" disabled>---------</option>
+            <!-- don't add anything here! -->
+          </select>
+        </p>
+        <p>
+          <label class="lbl">Preview button</label>
+          <span class="onoffswitch">
+            <input id="previewBtn" type="checkbox" class="onoffswitch-checkbox">
+            <label class="onoffswitch-label" for="previewBtn"></label>
+          </span>
+        </p>
+        <p>
+          <label class="lbl">Debugger</label>
+          <span class="onoffswitch">
+            <input id="debug" type="checkbox" class="onoffswitch-checkbox">
+            <label class="onoffswitch-label" for="debug"></label>
+          </span>
+        </p>
+        <p id="pSaveAndReload">
+          <button id="saveAndReload">Save and reload</button>
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="cardTitle">Open with...</div>
+
+        <p>
+          <label class="lbl">Open in</label>
+          <select id="owApp">
+            <option value="editor" selected>editor</option>
+            <option value="previewer">previewer</option>
+          </select>
+        </p>
+        <p>
+          <label class="lbl">Environment</label>
+          <select id="owEnv">
+            <option value="production">production</option>
+            <option value="acceptance" selected>acceptance</option>
+            <option value="staging">staging</option>
+            <option id="owEnvCustomDivider" disabled>---------</option>
+          </select>
+        </p>
+        <p>
+          <label class="lbl">Publication ID</label>
+          <input id="owPubId" type="text" />
+        </p>
+        <p>
+          <label class="lbl">API</label>
+          <select id="owApi">
+            <option value="https://api.foleon.com">production</option>
+            <option value="https://api-acceptance.foleon.dev" selected>acceptance</option>
+            <option value="https://api-staging.foleon.dev">staging</option>
+          </select>
+        </p>
+        <p id="pOwOpen">
+          <button id="owOpen">Open</button>
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script src="./bundle/bundle.js"></script>
+</body>
+
+</html>

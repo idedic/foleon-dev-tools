@@ -1,0 +1,154 @@
+:root {
+  --baseBlue: #002b49;
+  --baseRed: #fa4238;
+  --baseWhite: #ffffff;
+
+  --medium: #4e5d78;
+  --light: #8a94a6;
+  --disabled: #b0b7c3;
+
+  --info: #19b2d2;
+  --infoHover: #12a2c7;
+
+  --gutter0: 4px;
+  --gutter1: 8px;
+  --gutter2: 16px;
+
+  --radius: 3px;
+
+  --fontSize: 12px;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  font-family: 'Fira Sans', sans-serif;
+}
+
+html,
+body {
+  width: 260px;
+  margin: 0;
+  font-size: var(--fontSize);
+  color: var(--baseBlue);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  margin: 0;
+  outline: none;
+  background-color: var(--info);
+  color: var(--baseWhite);
+  padding: var(--gutter1) var(--gutter2);
+  border-radius: var(--radius);
+}
+button:hover {
+  background-color: var(--infoHover);
+}
+
+select,
+input[type='text'] {
+  display: inline-block;
+  vertical-align: middle;
+  height: 20px;
+  outline: none;
+  margin: 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--light);
+  width: 124px;
+  font-size: var(--fontSize);
+}
+
+section.h {
+  display: none !important;
+}
+
+#sectionLogo,
+#sectionError {
+  display: block;
+  height: 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+#sectionLogo > div {
+  width: 120px;
+  height: 120px;
+  background-image: url('../images/foleon_logo_2.png');
+  background-position: center;
+  background-size: 105%;
+  background-color: var(--baseWhite);
+  border: 6px solid var(--baseRed);
+  border-radius: 6px;
+}
+
+#sectionError {
+  color: var(--baseWhite);
+}
+
+.bodyWrap {
+  background-color: var(--baseBlue);
+  padding: var(--gutter1);
+}
+
+.bodyWrapTitle {
+  background-color: var(--baseBlue);
+  color: var(--baseWhite);
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-bottom: var(--gutter1);
+  font-weight: bold;
+}
+
+.card {
+  background-color: var(--baseWhite);
+  padding-bottom: var(--gutter1);
+  margin-bottom: var(--gutter1);
+  border-radius: var(--radius);
+}
+
+.bodyWrap .card:last-child {
+  margin-bottom: 0;
+}
+
+.cardTitle {
+  color: var(--baseWhite);
+  background-color: var(--baseRed);
+  padding: var(--gutter0) var(--gutter1);
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+p {
+  padding: 0 var(--gutter1);
+  margin: var(--gutter1) 0;
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+#info span {
+  color: var(--light);
+}
+
+.lbl {
+  display: inline-block;
+  min-width: 100px;
+  vertical-align: middle;
+}
+
+#pSaveAndReload,
+#pOwOpen {
+  border-top: 1px solid var(--light);
+  padding-top: 8px;
+}
+#saveAndReload,
+#owOpen {
+  display: block;
+  width: 100%;
+}
