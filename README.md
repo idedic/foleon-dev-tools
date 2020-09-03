@@ -4,7 +4,7 @@ The easier way to manage environments and flags.
 
 ## User guide
 
-#### Installation
+### Installation
 
 Load extension:
 - download zip and extract it **to folder**
@@ -23,12 +23,12 @@ Pin extension
 
 **Done!**
 
-#### "Info" section
+### "Info" section
 
 Just a basic info about the open publication in the Editor: publication name,
 publication id, page id and environment that you're currently on.
 
-#### "Flags" section
+### "Flags" section
 
 You can override local storage flags here.
 
@@ -43,7 +43,7 @@ You can override local storage flags here.
 When you are done with the changes, please click "Save and reload" button, because Editor needs to reload to
 collect flags from local storage.
 
-#### "Open with..." section
+### "Open with..." section
 
 Here you can open things in the tab.
 
