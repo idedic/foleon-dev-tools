@@ -50,7 +50,7 @@ If you set `default` it will remove that flag from the local storage.
 
 ### 🗂 "Open with..." section
 
-Here you can open things in the new tab.
+Here you can open things in a new tab. Based on the "Info" (section from above), you can open current publication in the Editor or Previewer.
 
 First, you choose if you want **Editor or Previewer**.
 
