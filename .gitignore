@@ -107,3 +107,4 @@ dist
 # Bundle file
 .idea/
 extension/popup/bundle/
+distzip/
