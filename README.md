@@ -6,7 +6,7 @@ The easier way to manage environments and flags.
 
 ## 🕺🏻 User guide
 
-### 💻 Installation
+### 💻 Installation and updating
 
 Load extension:
 - download zip and extract it **to folder**
@@ -21,9 +21,12 @@ Pin extension
 - find Foleon dev tools and click on the Pin icon
 - *now you'll always see the icon*
 
-**Go to the Editor window and refresh the page.**
+**Go to the Editor tab and refresh the page. Done!**
 
-**Done!**
+##### 🕹 Updating
+- download zip and extract it **the same folder as previous**
+
+**Go to the Editor tab and refresh the page. Done!**
 
 ### 🗂 "Info" section
 
@@ -71,11 +74,20 @@ This section will remember your preference for all fields except for publication
 
 ## 👨🏻‍💻 Developer guide
 
+### Develop
+
 - checkout
 - `yarn`
 - all things related to the extension are in `extension` folder, except the source for the Popup
 - the source for the Popup is `typescript` in the `src` folder
 - to build it, use `yarn build` which will place a `bundle.js` in `extension/popup/bundle` which is already included in `index.html`
-- just like the installation guide above, make sure to Load unpacked the `extension` folder (or reload the extension on reload button if already loaded) and reload the Editor tab
+- just like the installation guide above, make sure to Load unpacked the `extension` folder (or reload the extension on reload button if already loaded) and refresh the Editor tab
 - for debugging the Popup, right-click on Popup > Inspect
 - for debugging the Content script, find the Content script in the Editor's dev tools, Sources section
+
+### Installation and updating, developer way
+
+- checkout
+- "Load unpacked" the `foleon-dev-tools/extension` folder - you need to do this only for the first time
+- on every update (pull) make sure to run `yarn build` and go to the Editor tab and refresh the page
+
