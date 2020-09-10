@@ -2,7 +2,7 @@ import $ from 'cash-dom';
 
 import { DEFAULT, DIVIDER } from '../types';
 import { renderOption } from './tools';
-import { getPreviewerRootUrl } from '../services/urls';
+import { getApiUrl, getPreviewerRootUrl } from '../services/urls';
 import { additionalEnvs, apiKeys, defaultEnvs, getLsData, lsKeys } from '../services/data';
 import { getActiveTab, reloadTab, sendMsgToActiveTab } from '../services/chrome';
 
@@ -12,6 +12,12 @@ const $previewer = $('#previewer');
 const $debug = $('#debug');
 const $saveAndReload = $('#saveAndReload');
 
+const renderApisUI = () => {
+  const envs = [DEFAULT, DIVIDER, ...defaultEnvs];
+  const ui = envs.map((env) => renderOption(env, `<option value="${getApiUrl(env)}">${env}</option>`)).join('');
+  $api.html(ui);
+};
+
 const renderPreviewerEnvsUI = () => {
   const envs = [DEFAULT, DIVIDER, ...defaultEnvs, DIVIDER, ...additionalEnvs];
   const ui = envs.map((env) => renderOption(env, `<option value="${getPreviewerRootUrl(env)}">${env}</option>`)).join('');
@@ -19,6 +25,7 @@ const renderPreviewerEnvsUI = () => {
 };
 
 export const initFlags = () => {
+  renderApisUI();
   renderPreviewerEnvsUI();
 
   const lsData = getLsData();

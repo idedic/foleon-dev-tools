@@ -1,7 +1,7 @@
 import $ from 'cash-dom';
 
 import { lsGet, lsSet } from '../services/ls';
-import { App, DIVIDER, Env } from '../types';
+import { App, DEFAULT, DIVIDER, Env } from '../types';
 import { getApiUrl, getDashboardFullUrl, getEditorFullUrl, getPreviewerFullUrl } from '../services/urls';
 import { renderOption } from './tools';
 import { additionalEnvs, defaultEnvs, getInfo } from '../services/data';
@@ -19,6 +19,11 @@ const renderOwEnvEnvsUI = () => {
   $owEnv.html(ui);
 };
 
+const renderApisUI = () => {
+  const ui = defaultEnvs.map((env) => renderOption(env, `<option value="${getApiUrl(env)}">${env}</option>`)).join('');
+  $owApi.html(ui);
+};
+
 const setOwDataUI = () => {
   const owData = lsGet('owData') || {};
   $owApp.val(owData.app || App.EDITOR);
@@ -28,6 +33,7 @@ const setOwDataUI = () => {
 
 export const initOpen = () => {
   renderOwEnvEnvsUI();
+  renderApisUI();
   setOwDataUI();
 
   const info = getInfo();
