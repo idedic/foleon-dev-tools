@@ -1,136 +1,14 @@
-import $ from 'cash-dom';
-
-import { getActiveTab, sendMsgToActiveTab, createTab, reloadTab } from './chrome';
-import { set as lsSet, get as lsGet } from './ls';
-import { Info, Tab, UISections } from './types';
-
-const lsKeys = {
-  api: 'X-Api-Override',
-  auth: 'X-Auth-Override',
-  previewBtn: 'X-Show-Preview-Button',
-  previewer: 'X-Previewer-Override',
-  debug: 'X-EDITOR-DEBUG',
-};
-
-const apiKeys = {
-  'https://api.foleon.com': {
-    [lsKeys.api]: 'https://api.foleon.com',
-    [lsKeys.auth]: 'https://auth.foleon.com',
-  },
-  'https://api-acceptance.foleon.dev': {
-    [lsKeys.api]: 'https://api-acceptance.foleon.dev',
-    [lsKeys.auth]: 'https://auth-acceptance-dot-instant-magazine.appspot.com',
-  },
-  'https://api-staging.foleon.dev': {
-    [lsKeys.api]: 'https://api-staging.foleon.dev',
-    [lsKeys.auth]: 'https://auth-staging-dot-instant-magazine.appspot.com',
-  },
-  default: {
-    [lsKeys.api]: false,
-    [lsKeys.auth]: false,
-  },
-};
-
-const additionalEnvs = ['arsenije', 'zdravko', 'igor', 'slobodan', 'petar', 'anja', 'svetlana', 'maja', 'dusan'];
-
-let lsData: { [key: string]: any } = {};
-let info: Info = {};
-
-// info card
-const $info = $('#info');
-// flags card
-const $api = $('#api');
-const $previewBtn = $('#previewBtn');
-const $previewer = $('#previewer');
-const $previewerCustomDivider = $('#previewerCustomDivider');
-const $debug = $('#debug');
-const $saveAndReload = $('#saveAndReload');
-// open with card
-const $owPubId = $('#owPubId');
-const $owApp = $('#owApp');
-const $owEnv = $('#owEnv');
-const $owEnvCustomDivider = $('#owEnvCustomDivider');
-const $owApi = $('#owApi');
-const $owOpen = $('#owOpen');
-
-const parseInfo = (tab: Tab) => {
-  const { url, title } = tab;
-
-  const matchLocal = url.match(/\/\/localhost:/);
-  const matchProduction = url.match(/\/\/editor\.foleon\.com\//);
-  const matchEnv = url.match(/\/\/editor-(.+)\.foleon\.dev\//);
-  const matchPubId = url.match(/\/publication\/(\d+)/);
-  const matchPageId = url.match(/\/pages\/(\d+)/);
-
-  info = {
-    env: (() => {
-      if (matchLocal) return 'localhost';
-      if (matchProduction) return 'production';
-      if (matchEnv) return matchEnv[1];
-    })(),
-    pubId: matchPubId && matchPubId[1],
-    pageId: matchPageId && matchPageId[1],
-    title: (title || '').split(' - ')[1] || '',
-  };
-
-  generateInfoUI();
-
-  console.log('info', info);
-};
-
-const generateInfoUI = () => {
-  const ui = `
-    ${info.title}<br>
-    <span>env:</span> ${info.env} <span>id:</span> ${info.pubId} <span>page:</span> ${info.pageId}
-  `;
-  $info.html(ui);
-};
-
-const generatePreviewerCustomEnvsUI = () => {
-  const ui = additionalEnvs.map((env) => `<option value="https://previewer-${env}.foleon.dev">${env}</option>`).join('');
-  $previewerCustomDivider.after(ui);
-};
-
-const generateOwEnvCustomEnvsUI = () => {
-  const ui = additionalEnvs.map((env) => `<option value="${env}">${env}</option>`).join('');
-  $owEnvCustomDivider.after(ui);
-};
-
-const setOwDataUI = () => {
-  const owData = lsGet('owData') || {};
-  $owApp.val(owData.app || 'editor');
-  $owEnv.val(owData.env || 'acceptance');
-  $owApi.val(owData.api || 'https://api-acceptance.foleon.dev');
-};
-
-const showSection = (sectionId: string) => {
-  $('section').addClass('h');
-  $(`#${sectionId}`).removeClass('h');
-};
-
-const showErrorSection = (message: string | string[]) => {
-  let ui = '';
-  if (typeof message === 'string') {
-    ui = message;
-  } else if (Array.isArray(message)) {
-    ui = `<div>${message.map((paragraph) => `<p>${paragraph}</p>`).join('')}</div>`;
-  }
-  $(`#${UISections.error}`).html(ui);
-
-  showSection(UISections.error);
-};
-
-// ------------------------------
-// GO!
-// ------------------------------
-
-generatePreviewerCustomEnvsUI();
-generateOwEnvCustomEnvsUI();
-setOwDataUI();
+import { getActiveTab, sendMsgToActiveTab } from './services/chrome';
+import { showErrorSection, showSection } from './ui/tools';
+import { UISection } from './types';
+import { lsKeys, parseInfo, parseLsData } from './services/data';
+import { initInfo } from './ui/info';
+import { initFlags } from './ui/flags';
+import { initOpen } from './ui/open';
 
 getActiveTab((activeTab) => {
   console.log('activeTab', activeTab);
-  parseInfo(activeTab);
+  const info = parseInfo(activeTab);
 
   if (!info.pubId || !info.pageId) {
     showErrorSection([
@@ -143,21 +21,16 @@ getActiveTab((activeTab) => {
   sendMsgToActiveTab(
     { msgId: 'foleonDevTools.request', data: Object.values(lsKeys) },
     (response) => {
-      lsData = response;
-      console.log('lsData', lsData);
+      parseLsData(response);
 
       try {
-        // flags card
-        $api.val(lsData[lsKeys.api] || 'default');
-        $previewBtn.prop('checked', lsData[lsKeys.previewBtn] === 'true');
-        $previewer.val(lsData[lsKeys.previewer] || 'default');
-        $debug.prop('checked', lsData[lsKeys.debug] === 'true');
+        initInfo();
+        initFlags();
+        initOpen();
 
-        // open with card
-        $owPubId.val(info.pubId);
-
-        showSection(UISections.main);
+        showSection(UISection.main);
       } catch (e) {
+        console.error('foleonDevTools.request', e);
         showErrorSection([
           'Something went wrong while getting the data from the Editor.',
           'Please refresh the Editor tab and reopen the extension popup.',
@@ -169,68 +42,4 @@ getActiveTab((activeTab) => {
     },
     activeTab,
   );
-});
-
-$saveAndReload.on('click', () => {
-  const sendObj = {
-    // @ts-ignore
-    ...apiKeys[$api.val()],
-    [lsKeys.previewer]: $previewer.val() === 'default' ? false : $previewer.val(),
-    [lsKeys.previewBtn]: $previewBtn.prop('checked'),
-    [lsKeys.debug]: $debug.prop('checked'),
-  };
-
-  sendMsgToActiveTab({ msgId: 'foleonDevTools.set', data: sendObj }, () => {
-    getActiveTab((activeTab) => {
-      reloadTab(activeTab.id);
-      window.close();
-    });
-  });
-});
-
-$owApp
-  .on('change', () => {
-    const app = $owApp.val();
-    if (app === 'editor' || app === 'dashboard') {
-      $owPubId.parent().hide();
-      $owApi.parent().hide();
-    } else {
-      $owPubId.parent().show();
-      $owApi.parent().show();
-    }
-  })
-  .trigger('change');
-
-$owOpen.on('click', () => {
-  const app = $owApp.val();
-  const pubId = $owPubId.val();
-  const env = $owEnv.val();
-  const api = $owApi.val();
-
-  let url = '';
-
-  if (app === 'editor') {
-    if (env === 'production') {
-      url = `https://editor.foleon.com/publication/${info.pubId}/pages/${info.pageId}`;
-    } else {
-      url = `https://editor-${env}.foleon.dev/publication/${info.pubId}/pages/${info.pageId}`;
-    }
-  } else if (app === 'previewer') {
-    if (env === 'production') {
-      url = `https://previewer.foleon.com/?publicationId=${pubId}&api=${api}`;
-    } else {
-      url = `https://previewer-${env}.foleon.dev/?publicationId=${pubId}&api=${api}`;
-    }
-  } else if (app === 'dashboard') {
-    if (env === 'production') {
-      url = `https://app.foleon.com/`;
-    } else {
-      url = `https://app-${env}.foleon.dev/`;
-    }
-  }
-
-  lsSet('owData', { app, env, api });
-
-  createTab({ url, active: true });
-  window.close();
 });

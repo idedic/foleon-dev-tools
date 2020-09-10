@@ -1,4 +1,4 @@
-import { Tab } from './types';
+import { Tab } from '../types';
 
 export const getActiveTab = (callback: (activeTab: Tab) => void) => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
