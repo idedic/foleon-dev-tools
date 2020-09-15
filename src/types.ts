@@ -7,6 +7,7 @@ export interface Info {
 }
 
 export type Tab = chrome.tabs.Tab;
+export type UpdateProperties = chrome.tabs.UpdateProperties;
 
 export enum UISection {
   logo = 'sectionLogo',

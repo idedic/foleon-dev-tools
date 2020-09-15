@@ -1,4 +1,4 @@
-import { Tab } from '../types';
+import { Tab, UpdateProperties } from '../types';
 
 export const getActiveTab = (callback: (activeTab: Tab) => void) => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -20,3 +20,5 @@ export const sendMsgToActiveTab = (msgObj: any, responseCallback: (response?: an
 export const createTab = ({ url, active = false }: { url: string; active?: boolean }) => chrome.tabs.create({ url, active });
 
 export const reloadTab = (tabId: number) => chrome.tabs.reload(tabId);
+
+export const updateTab = (tabId: number, updateProperties: UpdateProperties) => chrome.tabs.update(tabId, updateProperties);

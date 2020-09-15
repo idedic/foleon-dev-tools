@@ -1,14 +1,15 @@
 :root {
-  --baseBlue: #002b49;
-  --baseRed: #fa4238;
+  --baseBlue: #001945;
+  --baseRed: #ff0000;
   --baseWhite: #ffffff;
 
   --medium: #4e5d78;
   --light: #8a94a6;
   --disabled: #b0b7c3;
 
-  --info: #19b2d2;
-  --infoHover: #12a2c7;
+  --info: #00b1ff;
+  --infoHover: #00a1ff;
+  --infoBorder: #0088ff;
 
   --gutter0: 4px;
   --gutter1: 8px;
@@ -67,7 +68,6 @@ section.h {
 
 #sectionLogo,
 #sectionError {
-  display: block;
   height: 260px;
   display: flex;
   justify-content: center;
@@ -146,9 +146,45 @@ p {
 #pOwOpen {
   border-top: 1px solid var(--light);
   padding-top: 8px;
+  position: relative;
 }
 #saveAndReload,
 #owOpen {
   display: block;
   width: 100%;
+}
+#owOpenMore {
+  position: absolute;
+  height: calc(100% - var(--gutter1));
+  width: 32px;
+  padding-top: 6px;
+  right: var(--gutter1);
+  top: var(--gutter1);
+  /*border-left: 1px solid var(--infoBorder);*/
+  background-color: var(--infoHover);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--baseWhite);
+  text-align: center;
+  cursor: pointer;
+}
+#owMoreWrap {
+  display: block;
+  position: absolute;
+  bottom: calc(100% - var(--gutter1) - 3px);
+  right: var(--gutter1);
+  background-color: var(--infoHover);
+  color: var(--baseWhite);
+  text-align: right;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+#owMoreWrap.h {
+  display: none !important;
+}
+#owMoreWrap > span {
+  padding: var(--gutter1);
+  display: block;
+  cursor: pointer;
+}
+#owMoreWrap > span:hover {
+  background-color: var(--infoBorder);
 }
