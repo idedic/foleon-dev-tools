@@ -14,8 +14,17 @@ export enum UISection {
   main = 'sectionMain',
 }
 
+export enum Api {
+  PRODUCTION = 'production',
+  ACCEPTANCE = 'acceptance',
+  STAGING = 'staging',
+}
+
 export enum Env {
   PRODUCTION = 'production',
+  BETA = 'beta',
+  RELEASE = 'release',
+  RELEASE_BETA = 'release beta',
   ACCEPTANCE = 'acceptance',
   STAGING = 'staging',
 }

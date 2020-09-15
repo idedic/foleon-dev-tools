@@ -42,8 +42,6 @@ const start = async () => {
   zipDir();
 
   removeTemp();
-
-  console.log('Finished.');
 };
 
-start();
+start().then(() => console.log('Finished.'));

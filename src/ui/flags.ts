@@ -3,7 +3,7 @@ import $ from 'cash-dom';
 import { DEFAULT, DIVIDER } from '../types';
 import { renderOption } from './tools';
 import { getApiUrl, getPreviewerRootUrl } from '../services/urls';
-import { additionalEnvs, apiKeys, defaultEnvs, getLsData, lsKeys } from '../services/data';
+import { additionalEnvs, apiKeys, apis, defaultEnvs, getLsData, lsKeys } from '../services/data';
 import { getActiveTab, reloadTab, sendMsgToActiveTab } from '../services/chrome';
 
 const $api = $('#api');
@@ -13,8 +13,8 @@ const $debug = $('#debug');
 const $saveAndReload = $('#saveAndReload');
 
 const renderApisUI = () => {
-  const envs = [DEFAULT, DIVIDER, ...defaultEnvs];
-  const ui = envs.map((env) => renderOption(env, `<option value="${getApiUrl(env)}">${env}</option>`)).join('');
+  const apisToRender = [DEFAULT, DIVIDER, ...apis];
+  const ui = apisToRender.map((env) => renderOption(env, `<option value="${getApiUrl(env)}">${env}</option>`)).join('');
   $api.html(ui);
 };
 

@@ -1,4 +1,4 @@
-import { DEFAULT, Env, Info, Tab } from '../types';
+import { Api, DEFAULT, Env, Info, Tab } from '../types';
 import { getApiUrl } from './urls';
 
 export const lsKeys = {
@@ -10,15 +10,15 @@ export const lsKeys = {
 };
 
 export const apiKeys = {
-  [getApiUrl(Env.PRODUCTION)]: {
+  [getApiUrl(Api.PRODUCTION)]: {
     [lsKeys.api]: 'https://api.foleon.com',
     [lsKeys.auth]: 'https://auth.foleon.com',
   },
-  [getApiUrl(Env.ACCEPTANCE)]: {
+  [getApiUrl(Api.ACCEPTANCE)]: {
     [lsKeys.api]: 'https://api-acceptance.foleon.dev',
     [lsKeys.auth]: 'https://auth-acceptance-dot-instant-magazine.appspot.com',
   },
-  [getApiUrl(Env.STAGING)]: {
+  [getApiUrl(Api.STAGING)]: {
     [lsKeys.api]: 'https://api-staging.foleon.dev',
     [lsKeys.auth]: 'https://auth-staging-dot-instant-magazine.appspot.com',
   },
@@ -28,7 +28,8 @@ export const apiKeys = {
   },
 };
 
-export const defaultEnvs = [Env.PRODUCTION, Env.ACCEPTANCE, Env.STAGING];
+export const apis = [Api.PRODUCTION, Api.ACCEPTANCE, Api.STAGING];
+export const defaultEnvs = [Env.PRODUCTION, Env.BETA, Env.RELEASE, Env.RELEASE_BETA, Env.ACCEPTANCE, Env.STAGING];
 export const additionalEnvs = ['arsenije', 'zdravko', 'igor', 'slobodan', 'petar', 'anja', 'svetlana', 'maja', 'dusan'];
 
 // Info

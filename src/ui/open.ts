@@ -1,10 +1,10 @@
 import $ from 'cash-dom';
 
 import { lsGet, lsSet } from '../services/ls';
-import { App, DEFAULT, DIVIDER, Env } from '../types';
+import { Api, App, DIVIDER, Env } from '../types';
 import { getApiUrl, getDashboardFullUrl, getEditorFullUrl, getPreviewerFullUrl } from '../services/urls';
 import { renderOption } from './tools';
-import { additionalEnvs, defaultEnvs, getInfo } from '../services/data';
+import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
 import { createTab } from '../services/chrome';
 
 const $owPubId = $('#owPubId');
@@ -20,7 +20,7 @@ const renderOwEnvEnvsUI = () => {
 };
 
 const renderApisUI = () => {
-  const ui = defaultEnvs.map((env) => renderOption(env, `<option value="${getApiUrl(env)}">${env}</option>`)).join('');
+  const ui = apis.map((api) => renderOption(api, `<option value="${getApiUrl(api)}">${api}</option>`)).join('');
   $owApi.html(ui);
 };
 
@@ -28,7 +28,7 @@ const setOwDataUI = () => {
   const owData = lsGet('owData') || {};
   $owApp.val(owData.app || App.EDITOR);
   $owEnv.val(owData.env || Env.ACCEPTANCE);
-  $owApi.val(owData.api || getApiUrl(Env.ACCEPTANCE));
+  $owApi.val(owData.api || getApiUrl(Api.ACCEPTANCE));
 };
 
 export const initOpen = () => {
