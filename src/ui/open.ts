@@ -90,7 +90,6 @@ export const initOpen = () => {
   });
 
   $owOpenMore.on('click', () => {
-    console.log('$owOpenMore click');
     $owMoreWrap.removeClass('h');
     document.addEventListener('click', hideMoreWrapHandler, true);
   });
