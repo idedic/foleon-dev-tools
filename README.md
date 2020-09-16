@@ -2,7 +2,7 @@
 
 The easier way to manage environments and flags.
 
-<img src="https://i.imgur.com/dbt2IWo.png" alt="screenshot" width="300">
+<img src="https://i.imgur.com/itbSrwn.png" alt="screenshot" width="300">
 
 ## 🕺🏻 User guide
 
@@ -74,8 +74,21 @@ This section will remember your preference for all fields except for publication
 
 ## 👨🏻‍💻 Developer guide
 
-### Develop
+### Installation and updating, developer way
 
+- checkout
+- "Load unpacked" the `foleon-dev-tools/extension` folder - you need to do this only for the first time
+- on every update (pull) make sure to run `yarn build` and go to the Editor tab and refresh the page
+
+### Develop and Contribute
+
+I decided to use Typescript combined with _querySelector-jQuery-like_ library for direct DOM manipulation.
+If this project grows significantly, I'll consider fancy full-fledged dev environment.
+**Feel free to post an issue, feature request, or to fork and make an interesting PR.**
+
+<img src="https://i.imgur.com/fyNBqmI.png" alt="joey" width="300">
+
+##### Usual steps:
 - checkout
 - `yarn`
 - all things related to the extension are in `extension` folder, except the source for the Popup
@@ -84,10 +97,4 @@ This section will remember your preference for all fields except for publication
 - just like the installation guide above, make sure to Load unpacked the `extension` folder (or reload the extension on reload button if already loaded) and refresh the Editor tab
 - for debugging the Popup, right-click on Popup > Inspect
 - for debugging the Content script, find the Content script in the Editor's dev tools, Sources section
-
-### Installation and updating, developer way
-
-- checkout
-- "Load unpacked" the `foleon-dev-tools/extension` folder - you need to do this only for the first time
-- on every update (pull) make sure to run `yarn build` and go to the Editor tab and refresh the page
 
