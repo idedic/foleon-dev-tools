@@ -1,10 +1,10 @@
 import { getActiveTab, sendMsgToActiveTab } from './services/chrome';
-import { showErrorSection, showSection } from './ui/tools';
-import { UISection } from './types';
+import { showErrorSection, showMainSection } from './ui/tools';
 import { lsKeys, parseInfo, parseLsData } from './services/data';
 import { initInfo } from './ui/info';
 import { initFlags } from './ui/flags';
 import { initOpen } from './ui/open';
+import { initSettings } from './ui/settings';
 
 getActiveTab((activeTab) => {
   console.log('activeTab', activeTab);
@@ -27,8 +27,9 @@ getActiveTab((activeTab) => {
         initInfo();
         initFlags();
         initOpen();
+        initSettings();
 
-        showSection(UISection.main);
+        showMainSection();
       } catch (e) {
         console.error('foleonDevTools.request', e);
         showErrorSection([

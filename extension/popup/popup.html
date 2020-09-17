@@ -10,7 +10,7 @@
 
 <body>
   <div class="bodyWrap">
-    <div class="bodyWrapTitle">Foleon dev tools</div>
+    <div class="bodyWrapTitle">Foleon dev tools<small id="settLink">settings</small></div>
 
     <section id="sectionLogo">
       <div></div>
@@ -48,8 +48,8 @@
             <label class="onoffswitch-label" for="debug"></label>
           </span>
         </p>
-        <p id="pSaveAndReload">
-          <button id="saveAndReload">Save and reload</button>
+        <p class="pButton">
+          <button id="saveAndReload" class="bigButton">Save and reload</button>
         </p>
       </div>
 
@@ -76,8 +76,8 @@
           <label class="lbl">API</label>
           <select id="owApi"></select>
         </p>
-        <p id="pOwOpen">
-          <button id="owOpen">Open</button>
+        <p class="pButton">
+          <button id="owOpen" class="bigButton">Open</button>
           <span id="owOpenMore">...</span>
           <span id="owMoreWrap" class="h">
             <span id="owMoreShowUrl">Just show the URL</span>
@@ -86,6 +86,32 @@
         </p>
       </div>
     </section>
+
+    <section id="sectionSettings" class="h">
+      <div class="card">
+        <div class="cardTitle">Settings</div>
+        <p>
+          <label class="lbl">Additional<br>environments</label>
+          <textarea id="settAdditionalEnvs"></textarea>
+        </p>
+        <p>
+          <label class="lbl">Editor port</label>
+          <input id="settEditorPort" type="text" />
+        </p>
+        <p>
+          <label class="lbl">Previewer port</label>
+          <input id="settPreviewerPort" type="text" />
+        </p>
+        <p>
+          <label class="lbl">Dashboard port</label>
+          <input id="settDashboardPort" type="text" />
+        </p>
+        <p class="pButton">
+          <button id="settSave" class="bigButton">Save</button>
+        </p>
+      </div>
+    </section>
+
   </div>
 
   <script src="./bundle/bundle.js"></script>

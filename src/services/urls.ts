@@ -1,4 +1,5 @@
-import { Api, DEFAULT, Env, Info } from '../types';
+import { Api, DEFAULT, Env, Info, LOCALHOST } from '../types';
+import { localhostDashboardPort, localhostEditorPort, localhostPreviewerPort } from './data';
 
 // editor
 
@@ -6,6 +7,8 @@ export const getEditorRootUrl = (env: string) => {
   switch (env) {
     case DEFAULT:
       return DEFAULT;
+    case LOCALHOST:
+      return `https://localhost:${localhostEditorPort}`;
 
     case Env.PRODUCTION:
       return `https://editor.foleon.com`;
@@ -32,6 +35,8 @@ export const getPreviewerRootUrl = (env: string) => {
   switch (env) {
     case DEFAULT:
       return DEFAULT;
+    case LOCALHOST:
+      return `http://localhost:${localhostPreviewerPort}`;
 
     case Env.PRODUCTION:
     case Env.BETA:
@@ -56,6 +61,8 @@ export const getDashboardRootUrl = (env: string) => {
   switch (env) {
     case DEFAULT:
       return DEFAULT;
+    case LOCALHOST:
+      return `http://localhost:${localhostDashboardPort}`;
 
     case Env.PRODUCTION:
       return `https://app.foleon.com`;

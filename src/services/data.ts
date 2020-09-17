@@ -1,5 +1,6 @@
-import { Api, DEFAULT, Env, Info, Tab } from '../types';
+import { Api, DEFAULT, Env, Info, LsKeys, Tab } from '../types';
 import { getApiUrl } from './urls';
+import { lsGet } from './ls';
 
 export const lsKeys = {
   api: 'X-Api-Override',
@@ -30,7 +31,20 @@ export const apiKeys = {
 
 export const apis = [Api.PRODUCTION, Api.ACCEPTANCE, Api.STAGING];
 export const defaultEnvs = [Env.PRODUCTION, Env.BETA, Env.RELEASE, Env.RELEASE_BETA, Env.ACCEPTANCE, Env.STAGING];
-export const additionalEnvs = ['arsenije', 'zdravko', 'igor', 'slobodan', 'petar', 'anja', 'svetlana', 'maja', 'dusan'];
+export const additionalEnvs = lsGet(LsKeys.ADDITIONAL_ENVS) || [
+  'arsenije',
+  'zdravko',
+  'igor',
+  'slobodan',
+  'petar',
+  'anja',
+  'svetlana',
+  'maja',
+  'dusan',
+];
+export const localhostEditorPort = lsGet(LsKeys.LOCALHOST_EDITOR_PORT) || 8080;
+export const localhostPreviewerPort = lsGet(LsKeys.LOCALHOST_PREVIEWER_PORT) || 8081;
+export const localhostDashboardPort = lsGet(LsKeys.LOCALHOST_DASHBOARD_PORT) || 3501;
 
 // Info
 

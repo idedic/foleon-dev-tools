@@ -50,7 +50,8 @@ button:hover {
 }
 
 select,
-input[type='text'] {
+input[type='text'],
+textarea {
   display: inline-block;
   vertical-align: middle;
   height: 20px;
@@ -60,6 +61,10 @@ input[type='text'] {
   border: 1px solid var(--light);
   width: 124px;
   font-size: var(--fontSize);
+}
+textarea {
+  height: 62px;
+  resize: vertical;
 }
 
 section.h {
@@ -103,6 +108,19 @@ section.h {
   font-weight: bold;
 }
 
+#settLink {
+  font-size: 10px;
+  float: right;
+  margin-top: 4px;
+  cursor: pointer;
+}
+#settLink:hover {
+  text-decoration: underline;
+}
+#settLink.active {
+  color: var(--info);
+}
+
 .card {
   background-color: var(--baseWhite);
   padding-bottom: var(--gutter1);
@@ -142,17 +160,17 @@ p {
   vertical-align: middle;
 }
 
-#pSaveAndReload,
-#pOwOpen {
+.pButton {
   border-top: 1px solid var(--light);
   padding-top: 8px;
   position: relative;
 }
-#saveAndReload,
-#owOpen {
+
+.bigButton {
   display: block;
   width: 100%;
 }
+
 #owOpenMore {
   position: absolute;
   height: calc(100% - var(--gutter1));

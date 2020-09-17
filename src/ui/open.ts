@@ -1,7 +1,7 @@
 import $ from 'cash-dom';
 
 import { lsGet, lsSet } from '../services/ls';
-import { Api, App, DIVIDER, Env } from '../types';
+import { Api, App, DIVIDER, Env, LOCALHOST, LsKeys } from '../types';
 import { getApiUrl, getDashboardFullUrl, getEditorFullUrl, getPreviewerFullUrl } from '../services/urls';
 import { renderOption } from './tools';
 import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
@@ -18,7 +18,7 @@ const $owMoreShowUrl = $('#owMoreShowUrl');
 const $owMoreThisTab = $('#owMoreThisTab');
 
 const renderOwEnvEnvsUI = () => {
-  const envs = [...defaultEnvs, DIVIDER, ...additionalEnvs];
+  const envs = [...defaultEnvs, DIVIDER, ...additionalEnvs, DIVIDER, LOCALHOST];
   const ui = envs.map((env) => renderOption(env)).join('');
   $owEnv.html(ui);
 };
@@ -29,7 +29,7 @@ const renderApisUI = () => {
 };
 
 const setOwDataUI = () => {
-  const owData = lsGet('owData') || {};
+  const owData = lsGet(LsKeys.OW_DATA) || {};
   $owApp.val(owData.app || App.EDITOR);
   $owEnv.val(owData.env || Env.ACCEPTANCE);
   $owApi.val(owData.api || getApiUrl(Api.ACCEPTANCE));
@@ -63,7 +63,7 @@ export const initOpen = () => {
       url = getDashboardFullUrl(env);
     }
 
-    lsSet('owData', { app, env, api });
+    lsSet(LsKeys.OW_DATA, { app, env, api });
 
     return url;
   };

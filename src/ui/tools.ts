@@ -1,6 +1,6 @@
-import $ from 'cash-dom';
+import $, { Cash } from 'cash-dom';
 
-import { DIVIDER, UISection } from '../types';
+import { DIVIDER } from '../types';
 
 export const renderOption = (value: string, customOption?: string) => {
   if (value === DIVIDER) {
@@ -9,9 +9,14 @@ export const renderOption = (value: string, customOption?: string) => {
   return customOption ? customOption : `<option value="${value}">${value}</option>`;
 };
 
-export const showSection = (sectionId: string) => {
-  $('section').addClass('h');
-  $(`#${sectionId}`).removeClass('h');
+const $allSections = $('section');
+const $sectionMain = $('#sectionMain');
+const $sectionError = $('#sectionError');
+const $sectionSettings = $('#sectionSettings');
+
+const showSection = ($section: Cash) => {
+  $allSections.addClass('h');
+  $section.removeClass('h');
 };
 
 export const showErrorSection = (message: string | string[]) => {
@@ -21,7 +26,11 @@ export const showErrorSection = (message: string | string[]) => {
   } else if (Array.isArray(message)) {
     ui = `<div>${message.map((paragraph) => `<p>${paragraph}</p>`).join('')}</div>`;
   }
-  $(`#${UISection.error}`).html(ui);
+  $sectionError.html(ui);
 
-  showSection(UISection.error);
+  showSection($sectionError);
 };
+
+export const showMainSection = () => showSection($sectionMain);
+
+export const showSettingsSection = () => showSection($sectionSettings);
