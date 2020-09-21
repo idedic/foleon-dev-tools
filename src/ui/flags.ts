@@ -3,7 +3,7 @@ import $ from 'cash-dom';
 import { DEFAULT, DIVIDER } from '../types';
 import { renderOption } from './tools';
 import { getApiUrl, getPreviewerRootUrl } from '../services/urls';
-import { additionalEnvs, apiKeys, apis, defaultEnvs, getLsData, lsKeys } from '../services/data';
+import { additionalEnvs, apiKeys, apis, defaultEnvs, getLsData, flagsKeys } from '../services/data';
 import { getActiveTab, reloadTab, sendMsgToActiveTab } from '../services/chrome';
 
 const $api = $('#api');
@@ -30,18 +30,18 @@ export const initFlags = () => {
 
   const lsData = getLsData();
 
-  $api.val(lsData[lsKeys.api] || DEFAULT);
-  $previewBtn.prop('checked', lsData[lsKeys.previewBtn] === 'true');
-  $previewer.val(lsData[lsKeys.previewer] || DEFAULT);
-  $debug.prop('checked', lsData[lsKeys.debug] === 'true');
+  $api.val(lsData[flagsKeys.api] || DEFAULT);
+  $previewBtn.prop('checked', lsData[flagsKeys.previewBtn] === 'true');
+  $previewer.val(lsData[flagsKeys.previewer] || DEFAULT);
+  $debug.prop('checked', lsData[flagsKeys.debug] === 'true');
 
   $saveAndReload.on('click', () => {
     const sendObj = {
       // @ts-ignore
       ...apiKeys[$api.val()],
-      [lsKeys.previewer]: $previewer.val() === DEFAULT ? false : $previewer.val(),
-      [lsKeys.previewBtn]: $previewBtn.prop('checked'),
-      [lsKeys.debug]: $debug.prop('checked'),
+      [flagsKeys.previewer]: $previewer.val() === DEFAULT ? false : $previewer.val(),
+      [flagsKeys.previewBtn]: $previewBtn.prop('checked'),
+      [flagsKeys.debug]: $debug.prop('checked'),
     };
 
     sendMsgToActiveTab({ msgId: 'foleonDevTools.set', data: sendObj }, () => {

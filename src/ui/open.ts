@@ -7,7 +7,6 @@ import { renderOption } from './tools';
 import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
 import { createTab, getActiveTab, updateTab } from '../services/chrome';
 
-const $owPubId = $('#owPubId');
 const $owApp = $('#owApp');
 const $owEnv = $('#owEnv');
 const $owApi = $('#owApi');
@@ -49,7 +48,6 @@ export const initOpen = () => {
 
   const getOpenUrl = () => {
     const app = $owApp.val() as string;
-    const pubId = $owPubId.val() as string;
     const env = $owEnv.val() as string;
     const api = $owApi.val() as string;
 
@@ -58,7 +56,7 @@ export const initOpen = () => {
     if (app === App.EDITOR) {
       url = getEditorFullUrl(info, env);
     } else if (app === App.PREVIEWER) {
-      url = getPreviewerFullUrl(env, pubId, api);
+      url = getPreviewerFullUrl(env, info.pubId, api);
     } else if (app === App.DASHBOARD) {
       url = getDashboardFullUrl(env);
     }
@@ -68,16 +66,12 @@ export const initOpen = () => {
     return url;
   };
 
-  $owPubId.val(info.pubId);
-
   $owApp
     .on('change', () => {
       const app = $owApp.val();
       if (app === App.EDITOR || app === App.DASHBOARD) {
-        $owPubId.parent().hide();
         $owApi.parent().hide();
       } else {
-        $owPubId.parent().show();
         $owApi.parent().show();
       }
     })

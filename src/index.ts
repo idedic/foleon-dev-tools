@@ -1,6 +1,6 @@
 import { getActiveTab, sendMsgToActiveTab } from './services/chrome';
 import { showErrorSection, showMainSection } from './ui/tools';
-import { lsKeys, parseInfo, parseLsData } from './services/data';
+import { flagsKeys, parseInfo, parseLsData } from './services/data';
 import { initInfo } from './ui/info';
 import { initFlags } from './ui/flags';
 import { initOpen } from './ui/open';
@@ -19,7 +19,7 @@ getActiveTab((activeTab) => {
   }
 
   sendMsgToActiveTab(
-    { msgId: 'foleonDevTools.request', data: Object.values(lsKeys) },
+    { msgId: 'foleonDevTools.request', data: Object.values(flagsKeys) },
     (response) => {
       parseLsData(response);
 

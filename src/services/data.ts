@@ -2,7 +2,7 @@ import { Api, DEFAULT, Env, Info, LsKeys, Tab } from '../types';
 import { getApiUrl } from './urls';
 import { lsGet } from './ls';
 
-export const lsKeys = {
+export const flagsKeys = {
   api: 'X-Api-Override',
   auth: 'X-Auth-Override',
   previewBtn: 'X-Show-Preview-Button',
@@ -12,20 +12,20 @@ export const lsKeys = {
 
 export const apiKeys = {
   [getApiUrl(Api.PRODUCTION)]: {
-    [lsKeys.api]: 'https://api.foleon.com',
-    [lsKeys.auth]: 'https://auth.foleon.com',
+    [flagsKeys.api]: 'https://api.foleon.com',
+    [flagsKeys.auth]: 'https://auth.foleon.com',
   },
   [getApiUrl(Api.ACCEPTANCE)]: {
-    [lsKeys.api]: 'https://api-acceptance.foleon.dev',
-    [lsKeys.auth]: 'https://auth-acceptance-dot-instant-magazine.appspot.com',
+    [flagsKeys.api]: 'https://api-acceptance.foleon.dev',
+    [flagsKeys.auth]: 'https://auth-acceptance-dot-instant-magazine.appspot.com',
   },
   [getApiUrl(Api.STAGING)]: {
-    [lsKeys.api]: 'https://api-staging.foleon.dev',
-    [lsKeys.auth]: 'https://auth-staging-dot-instant-magazine.appspot.com',
+    [flagsKeys.api]: 'https://api-staging.foleon.dev',
+    [flagsKeys.auth]: 'https://auth-staging-dot-instant-magazine.appspot.com',
   },
   [getApiUrl(DEFAULT)]: {
-    [lsKeys.api]: false,
-    [lsKeys.auth]: false,
+    [flagsKeys.api]: false,
+    [flagsKeys.auth]: false,
   },
 };
 
