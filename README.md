@@ -64,13 +64,20 @@ If Editor:
 
 If Previewer:
 - you can choose the **environment**
-- you'll see **publication id** (you can change it if you like - this is not available for "editor" option because we need to know the page id also)
 - you can choose the **API** (this is not available for "editor" option because we have to set the API flag in the local storage like explained above)
 
 If Dashboard:
 - you can choose the **environment**
 
 This section will remember your preference for all fields except for publication id. That id is always the one from the editor.
+
+"Open" button will open in a new tab. There's the '...' option which will expand 2 more buttons: "Open in this tab" and "Just show the url", which is useful if you need to copy the url and use it in another browser for example.
+
+### ⚙️ Settings
+
+You can configure additional environments. Just enter a coma-separated array of names and it will be available in the environment dropdowns.
+
+You can configure ports for localhost for all apps.
 
 ## 👨🏻‍💻 Developer guide
 
