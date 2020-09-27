@@ -10,7 +10,10 @@
 
 <body>
   <div class="bodyWrap">
-    <div class="bodyWrapTitle">Foleon dev tools<small id="settLink">settings</small></div>
+    <div class="bodyWrapTitle">
+      <a id="titleLink" href="https://github.com/idedic/foleon-dev-tools" target="blank">Foleon Dev Tools</a>
+      <small id="settLink">settings</small>
+    </div>
 
     <section id="sectionLogo">
       <div></div>
@@ -54,13 +57,14 @@
       </div>
 
       <div class="card">
-        <div class="cardTitle">Open with...</div>
+        <div class="cardTitle">Open in new tab...</div>
 
         <p>
-          <label class="lbl">Open in</label>
+          <label class="lbl">Application</label>
           <select id="owApp">
             <option value="editor" selected>editor</option>
             <option value="previewer">previewer</option>
+            <option value="item-previewer">item previewer</option>
             <option value="dashboard">dashboard</option>
           </select>
         </p>
@@ -69,11 +73,19 @@
           <select id="owEnv"></select>
         </p>
         <p>
+          <label class="lbl">Item Id</label>
+          <input id="owItemId" type="text">
+        </p>
+        <p>
+          <label class="lbl">Composition Id</label>
+          <input id="owCompositionId" type="text">
+        </p>
+        <p>
           <label class="lbl">API</label>
           <select id="owApi"></select>
         </p>
         <p class="pButton">
-          <button id="owOpen" class="bigButton">Open</button>
+          <button id="owOpen" class="bigButton">Open in new tab</button>
           <span id="owOpenMore">...</span>
           <span id="owMoreWrap" class="h">
             <span id="owMoreShowUrl">Just show the URL</span>

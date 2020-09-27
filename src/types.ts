@@ -27,6 +27,7 @@ export enum Env {
 export enum App {
   EDITOR = 'editor',
   PREVIEWER = 'previewer',
+  ITEM_PREVIEWER = 'item-previewer',
   DASHBOARD = 'dashboard',
 }
 

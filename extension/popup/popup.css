@@ -108,6 +108,14 @@ section.h {
   font-weight: bold;
 }
 
+#titleLink, #titleLink:visited {
+  text-decoration: none;
+  color: inherit;
+}
+#titleLink:hover {
+  text-decoration: underline;
+}
+
 #settLink {
   font-size: 10px;
   float: right;

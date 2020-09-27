@@ -2,13 +2,15 @@ import $ from 'cash-dom';
 
 import { lsGet, lsSet } from '../services/ls';
 import { Api, App, DIVIDER, Env, LOCALHOST, LsKeys } from '../types';
-import { getApiUrl, getDashboardFullUrl, getEditorFullUrl, getPreviewerFullUrl } from '../services/urls';
+import { getApiUrl, getDashboardFullUrl, getEditorFullUrl, getPreviewerFullUrl, getItemPreviewerFullUrl } from '../services/urls';
 import { renderOption } from './tools';
 import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
 import { createTab, getActiveTab, updateTab } from '../services/chrome';
 
 const $owApp = $('#owApp');
 const $owEnv = $('#owEnv');
+const $owItemId = $('#owItemId');
+const $owCompositionId = $('#owCompositionId');
 const $owApi = $('#owApi');
 const $owOpen = $('#owOpen');
 const $owOpenMore = $('#owOpenMore');
@@ -50,6 +52,8 @@ export const initOpen = () => {
     const app = $owApp.val() as string;
     const env = $owEnv.val() as string;
     const api = $owApi.val() as string;
+    const itemId = $owItemId.val() as string;
+    const compositionId = $owCompositionId.val() as string;
 
     let url = '';
 
@@ -57,6 +61,8 @@ export const initOpen = () => {
       url = getEditorFullUrl(info, env);
     } else if (app === App.PREVIEWER) {
       url = getPreviewerFullUrl(env, info.pubId, api);
+    } else if (app === App.ITEM_PREVIEWER) {
+      url = getItemPreviewerFullUrl(env, itemId, compositionId, api);
     } else if (app === App.DASHBOARD) {
       url = getDashboardFullUrl(env);
     }
@@ -69,10 +75,22 @@ export const initOpen = () => {
   $owApp
     .on('change', () => {
       const app = $owApp.val();
-      if (app === App.EDITOR || app === App.DASHBOARD) {
-        $owApi.parent().hide();
-      } else {
-        $owApi.parent().show();
+      switch (app) {
+        case App.PREVIEWER:
+          $owItemId.parent().hide();
+          $owCompositionId.parent().hide();
+          $owApi.parent().show();
+          break;
+        case App.ITEM_PREVIEWER:
+          $owItemId.parent().show();
+          $owCompositionId.parent().show();
+          $owApi.parent().show();
+          break;
+        default:
+          $owItemId.parent().hide();
+          $owCompositionId.parent().hide();
+          $owApi.parent().hide();
+          break;
       }
     })
     .trigger('change');

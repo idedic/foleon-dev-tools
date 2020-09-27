@@ -55,6 +55,11 @@ export const getPreviewerFullUrl = (env: string, pubId: string, api: string) => 
   return `${getPreviewerRootUrl(env)}${path}`;
 };
 
+export const getItemPreviewerFullUrl = (env: string, itemId: string, compositionId: string, api: string, screenshotHeight = 840) => {
+  const path = `/?itemId=${itemId}&compositionId=${compositionId}&_screenshots_=1&screenheight=${screenshotHeight}&api=${api}`
+  return `${getPreviewerRootUrl(env)}${path}`;
+};
+
 // dashboard
 
 export const getDashboardRootUrl = (env: string) => {
