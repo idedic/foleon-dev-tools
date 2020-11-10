@@ -36,9 +36,6 @@
             <input id="previewBtn" type="checkbox" class="onoffswitch-checkbox">
             <label class="onoffswitch-label" for="previewBtn"></label>
           </span>
-        </p>
-        <p>
-          <label class="lbl">Dev-Preview env</label>
           <select id="previewer"></select>
         </p>
         <p>
@@ -56,7 +53,7 @@
       <div class="card">
         <div class="cardTitle">Open with...</div>
 
-        <p>
+        <p id="owAppWrap">
           <label class="lbl">Open in</label>
           <select id="owApp">
             <option value="editor" selected>editor</option>
@@ -71,6 +68,13 @@
         <p>
           <label class="lbl">API</label>
           <select id="owApi"></select>
+        </p>
+        <p>
+          <label class="lbl">Print mode</label>
+          <span class="onoffswitch">
+            <input id="owPrint" type="checkbox" class="onoffswitch-checkbox">
+            <label class="onoffswitch-label" for="owPrint"></label>
+          </span>
         </p>
         <p class="pButton">
           <button id="owOpen" class="bigButton">Open</button>

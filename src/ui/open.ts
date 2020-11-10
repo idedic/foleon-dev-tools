@@ -1,4 +1,4 @@
-import $ from 'cash-dom';
+import $, { Cash } from 'cash-dom';
 
 import { lsGet, lsSet } from '../services/ls';
 import { Api, App, DIVIDER, Env, LOCALHOST, LsKeys } from '../types';
@@ -7,9 +7,13 @@ import { renderOption } from './tools';
 import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
 import { createTab, getActiveTab, updateTab } from '../services/chrome';
 
+const hideRow = ($el: Cash) => $el.closest('p').hide();
+const showRow = ($el: Cash) => $el.closest('p').show();
+
 const $owApp = $('#owApp');
 const $owEnv = $('#owEnv');
 const $owApi = $('#owApi');
+const $owPrint = $('#owPrint');
 const $owOpen = $('#owOpen');
 const $owOpenMore = $('#owOpenMore');
 const $owMoreWrap = $('#owMoreWrap');
@@ -32,6 +36,7 @@ const setOwDataUI = () => {
   $owApp.val(owData.app || App.EDITOR);
   $owEnv.val(owData.env || Env.ACCEPTANCE);
   $owApi.val(owData.api || getApiUrl(Api.ACCEPTANCE));
+  $owPrint.prop('checked', owData.print || false);
 };
 
 const hideMoreWrapHandler = () => {
@@ -50,18 +55,19 @@ export const initOpen = () => {
     const app = $owApp.val() as string;
     const env = $owEnv.val() as string;
     const api = $owApi.val() as string;
+    const print = $owPrint.prop('checked');
 
     let url = '';
 
     if (app === App.EDITOR) {
       url = getEditorFullUrl(info, env);
     } else if (app === App.PREVIEWER) {
-      url = getPreviewerFullUrl(env, info.pubId, api);
+      url = getPreviewerFullUrl(env, info.pubId, api, print);
     } else if (app === App.DASHBOARD) {
       url = getDashboardFullUrl(env);
     }
 
-    lsSet(LsKeys.OW_DATA, { app, env, api });
+    lsSet(LsKeys.OW_DATA, { app, env, api, print });
 
     return url;
   };
@@ -70,9 +76,11 @@ export const initOpen = () => {
     .on('change', () => {
       const app = $owApp.val();
       if (app === App.EDITOR || app === App.DASHBOARD) {
-        $owApi.parent().hide();
+        hideRow($owApi);
+        hideRow($owPrint);
       } else {
-        $owApi.parent().show();
+        showRow($owApi);
+        showRow($owPrint);
       }
     })
     .trigger('change');

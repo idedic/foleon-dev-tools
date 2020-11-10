@@ -171,6 +171,14 @@ p {
   width: 100%;
 }
 
+#previewer {
+  width: 93px;
+}
+
+#owAppWrap {
+  border-bottom: 1px dashed var(--light);
+  padding-bottom: var(--gutter1);
+}
 #owOpenMore {
   position: absolute;
   height: calc(100% - var(--gutter1));
