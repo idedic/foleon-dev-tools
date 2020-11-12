@@ -93,6 +93,10 @@ section.h {
 #sectionError {
   color: var(--baseWhite);
 }
+#sectionError > div {
+  max-height: 100%;
+  overflow: auto;
+}
 
 .bodyWrap {
   background-color: var(--baseBlue);
@@ -213,4 +217,32 @@ p {
 }
 #owMoreWrap > span:hover {
   background-color: var(--infoBorder);
+}
+
+.favRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.favRowLink, .favRowLink:visited {
+  color: var(--baseBlue);
+}
+.favRowLink:hover {
+  color: var(--infoHover);
+}
+
+.favRowX {
+  color: var(--baseBlue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding-left: var(--gutter0);
+}
+.favRowX:hover {
+  color: var(--infoHover);
+}
+
+.favLinkIndex {
+  color: var(--baseWhite);
 }

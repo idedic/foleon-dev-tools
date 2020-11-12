@@ -73,8 +73,6 @@ export const parseInfo = (tab: Tab) => {
     title: (title || '').split(' - ')[1] || '',
   };
 
-  console.log('Info', info);
-
   return info;
 };
 
@@ -87,8 +85,6 @@ let lsData: { [key: string]: any } = {};
 export const parseLsData = (data: typeof lsData) => {
   // we don't do anything right now, but maybe in the future...
   lsData = data;
-
-  console.log('lsData', lsData);
 
   return lsData;
 };

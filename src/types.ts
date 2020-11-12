@@ -36,6 +36,7 @@ export const LOCALHOST = 'localhost';
 
 export enum LsKeys {
   OW_DATA = 'owData',
+  FAV_DATA = 'favData',
   ADDITIONAL_ENVS = 'additionalEnvs',
   LOCALHOST_EDITOR_PORT = 'localhostEditorPort',
   LOCALHOST_PREVIEWER_PORT = 'localhostPreviewerPort',

@@ -7,8 +7,18 @@ import { renderOption } from './tools';
 import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
 import { createTab, getActiveTab, updateTab } from '../services/chrome';
 
+type OwData = {
+  app: string;
+  env: string;
+  api: string;
+  print: boolean;
+};
+
 const hideRow = ($el: Cash) => $el.closest('p').hide();
 const showRow = ($el: Cash) => $el.closest('p').show();
+
+const getOwData = () => lsGet(LsKeys.OW_DATA) as OwData;
+const setOwData = (owData: OwData) => lsSet(LsKeys.OW_DATA, owData);
 
 const $owApp = $('#owApp');
 const $owEnv = $('#owEnv');
@@ -32,11 +42,11 @@ const renderApisUI = () => {
 };
 
 const setOwDataUI = () => {
-  const owData = lsGet(LsKeys.OW_DATA) || {};
+  const owData = getOwData() || ({} as OwData);
   $owApp.val(owData.app || App.EDITOR);
   $owEnv.val(owData.env || Env.ACCEPTANCE);
   $owApi.val(owData.api || getApiUrl(Api.ACCEPTANCE));
-  $owPrint.prop('checked', owData.print || false);
+  $owPrint.prop('checked', !!owData.print || false);
 };
 
 const hideMoreWrapHandler = () => {
@@ -67,7 +77,7 @@ export const initOpen = () => {
       url = getDashboardFullUrl(env);
     }
 
-    lsSet(LsKeys.OW_DATA, { app, env, api, print });
+    setOwData({ app, env, api, print });
 
     return url;
   };
