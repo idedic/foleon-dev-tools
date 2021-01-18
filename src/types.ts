@@ -3,7 +3,7 @@ export interface Info {
   pubId?: string;
   pageId?: string;
   overlayId?: string;
-  title?: string;
+  pubName?: string;
 }
 
 export type Tab = chrome.tabs.Tab;
@@ -41,4 +41,10 @@ export enum LsKeys {
   LOCALHOST_EDITOR_PORT = 'localhostEditorPort',
   LOCALHOST_PREVIEWER_PORT = 'localhostPreviewerPort',
   LOCALHOST_DASHBOARD_PORT = 'localhostDashboardPort',
+}
+
+export interface ICurrentApp {
+  isEditor: boolean;
+  isDashboard: boolean;
+  isPreviewer: boolean;
 }

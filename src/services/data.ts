@@ -70,7 +70,7 @@ export const parseInfo = (tab: Tab) => {
     pubId: matchPubId && matchPubId[1],
     pageId: matchPageId && matchPageId[1],
     overlayId: matchOverlayId && matchOverlayId[1],
-    title: (title || '').split(' - ')[1] || '',
+    pubName: (title || '').split(' - ')[1] || '',
   };
 
   console.log('Info', info);

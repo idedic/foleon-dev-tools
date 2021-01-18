@@ -1,6 +1,6 @@
 import $ from 'cash-dom';
 
-import { DEFAULT, DIVIDER } from '../types';
+import { ICurrentApp, DEFAULT, DIVIDER } from '../types';
 import { renderOption } from './tools';
 import { getApiUrl, getPreviewerRootUrl } from '../services/urls';
 import { additionalEnvs, apiKeys, apis, defaultEnvs, getLsData, flagsKeys } from '../services/data';
@@ -24,9 +24,19 @@ const renderPreviewerEnvsUI = () => {
   $previewer.html(ui);
 };
 
-export const initFlags = () => {
+const showOptionsBasedOnCurrentApp = (currentApp: ICurrentApp) => {
+  if (!currentApp.isEditor) {
+    $previewBtn.parent().parent().hide();
+    $previewer.parent().hide();
+    $debug.parent().parent().hide();
+  }
+};
+
+export const initFlags = (currentApp: ICurrentApp) => {
   renderApisUI();
   renderPreviewerEnvsUI();
+
+  showOptionsBasedOnCurrentApp(currentApp);
 
   const lsData = getLsData();
 

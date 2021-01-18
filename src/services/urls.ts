@@ -24,8 +24,8 @@ export const getEditorRootUrl = (env: string) => {
   }
 };
 
-export const getEditorFullUrl = (info: Info, env: string) => {
-  const path = `/publication/${info.pubId}/pages/${info.pageId}${info.overlayId ? `/overlay/${info.overlayId}` : ''}`;
+export const getEditorFullUrl = (env: string, publicationId: string, pageId: string, overlayId?: string) => {
+  const path = `/publication/${publicationId}/pages/${pageId}${overlayId ? `/overlay/${overlayId}` : ''}`;
   return `${getEditorRootUrl(env)}${path}`;
 };
 
@@ -56,7 +56,7 @@ export const getPreviewerFullUrl = (env: string, pubId: string, api: string) => 
 };
 
 export const getItemPreviewerFullUrl = (env: string, itemId: string, compositionId: string, api: string, screenshotHeight = 840) => {
-  const path = `/?itemId=${itemId}&compositionId=${compositionId}&_screenshots_=1&screenheight=${screenshotHeight}&api=${api}`
+  const path = `/?itemId=${itemId}&compositionId=${compositionId}&_screenshots_=1&screenheight=${screenshotHeight}&api=${api}`;
   return `${getPreviewerRootUrl(env)}${path}`;
 };
 
