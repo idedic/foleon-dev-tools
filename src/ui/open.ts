@@ -1,4 +1,4 @@
-import $ from 'cash-dom';
+import $, { Cash } from 'cash-dom';
 
 import { lsGet, lsSet } from '../services/ls';
 import { Api, App, DIVIDER, Env, Info, LOCALHOST, LsKeys } from '../types';
@@ -6,6 +6,19 @@ import { getApiUrl, getDashboardFullUrl, getEditorFullUrl, getPreviewerFullUrl, 
 import { renderOption } from './tools';
 import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
 import { createTab, getActiveTab, updateTab } from '../services/chrome';
+
+type OwData = {
+  app: string;
+  env: string;
+  api: string;
+  print: boolean;
+};
+
+const hideRow = ($el: Cash) => $el.closest('p').hide();
+const showRow = ($el: Cash) => $el.closest('p').show();
+
+const getOwData = () => (lsGet(LsKeys.OW_DATA) as OwData) || {};
+const setOwData = (owData: OwData) => lsSet(LsKeys.OW_DATA, owData);
 
 const $owApp = $('#owApp');
 const $owEnv = $('#owEnv');
@@ -16,7 +29,7 @@ const $owOverlayId = $('#owOverlayId');
 const $owItemId = $('#owItemId');
 const $owCompositionId = $('#owCompositionId');
 const $owApi = $('#owApi');
-//----------------------------------------------
+const $owPrint = $('#owPrint');
 const $owOpen = $('#owOpen');
 
 const $owOpenMore = $('#owOpenMore');
@@ -36,13 +49,14 @@ const renderApisUI = () => {
 };
 
 const setOwDataUI = (info: Info) => {
-  const owData = lsGet(LsKeys.OW_DATA) || {};
+  const owData = (lsGet(LsKeys.OW_DATA) || {}) as OwData;
   $owApp.val(owData.app || App.EDITOR);
   $owEnv.val(owData.env || Env.ACCEPTANCE);
   $owPublicationId.val(info.pubId);
   $owPageId.val(info.pageId);
   $owOverlayId.val(info.overlayId);
   $owApi.val(owData.api || getApiUrl(Api.ACCEPTANCE));
+  $owPrint.prop('checked', !!owData.print || false);
 };
 
 const hideMoreWrapHandler = () => {
@@ -69,20 +83,27 @@ export const initOpen = () => {
 
           $owPublicationId.parent().show();
           $owApi.parent().show();
+          showRow($owApi);
+          showRow($owPrint);
           break;
         case App.ITEM_PREVIEWER:
           $owPublicationId.parent().hide();
           $owPageId.parent().hide();
           $owOverlayId.parent().hide();
+          hideRow($owApi);
+          hideRow($owPrint);
 
           $owItemId.parent().show();
           $owCompositionId.parent().show();
           $owApi.parent().show();
+
           break;
         case App.EDITOR:
           $owItemId.parent().hide();
           $owCompositionId.parent().hide();
           $owApi.parent().hide();
+          hideRow($owApi);
+          hideRow($owPrint);
 
           $owPublicationId.parent().show();
           $owPageId.parent().show();
@@ -93,6 +114,8 @@ export const initOpen = () => {
           $owItemId.parent().hide();
           $owCompositionId.parent().hide();
           $owApi.parent().hide();
+          hideRow($owApi);
+          hideRow($owPrint);
 
           $owPublicationId.parent().hide();
           $owPageId.parent().hide();
@@ -111,20 +134,21 @@ export const initOpen = () => {
     const overlayId = $owOverlayId.val() as string;
     const itemId = $owItemId.val() as string;
     const compositionId = $owCompositionId.val() as string;
+    const print = $owPrint.prop('checked');
 
     let url = '';
 
     if (app === App.EDITOR) {
       url = getEditorFullUrl(env, publicationId, pageId, overlayId);
     } else if (app === App.PREVIEWER) {
-      url = getPreviewerFullUrl(env, publicationId, api);
+      url = getPreviewerFullUrl(env, publicationId, api, print);
     } else if (app === App.ITEM_PREVIEWER) {
       url = getItemPreviewerFullUrl(env, itemId, compositionId, api);
     } else if (app === App.DASHBOARD) {
       url = getDashboardFullUrl(env);
     }
 
-    lsSet(LsKeys.OW_DATA, { app, env, api });
+    setOwData({ app, env, api, print });
 
     return url;
   };

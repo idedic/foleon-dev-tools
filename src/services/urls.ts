@@ -62,8 +62,8 @@ export const getPreviewerRootUrl = (env: string) => {
   }
 };
 
-export const getPreviewerFullUrl = (env: string, pubId: string, api: string) => {
-  const path = `/?publicationId=${pubId}&api=${api}`;
+export const getPreviewerFullUrl = (env: string, pubId: string, api: string, print?: boolean) => {
+  const path = `/?publicationId=${pubId}&api=${api}${print ? '&_print_=1' : ''}`;
   return `${getPreviewerRootUrl(env)}${path}`;
 };
 

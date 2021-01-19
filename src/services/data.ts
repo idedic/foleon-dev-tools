@@ -17,11 +17,11 @@ export const apiKeys = {
   },
   [getApiUrl(Api.ACCEPTANCE)]: {
     [flagsKeys.api]: 'https://api-acceptance.foleon.dev',
-    [flagsKeys.auth]: 'https://auth-acceptance-dot-instant-magazine.appspot.com',
+    [flagsKeys.auth]: 'https://auth-acceptance-dot-foleon-staging.appspot.com',
   },
   [getApiUrl(Api.STAGING)]: {
     [flagsKeys.api]: 'https://api-staging.foleon.dev',
-    [flagsKeys.auth]: 'https://auth-staging-dot-instant-magazine.appspot.com',
+    [flagsKeys.auth]: 'https://auth-staging-dot-foleon-staging.appspot.com',
   },
   [getApiUrl(Api.ACCEPTANCE_CLOUD)]: {
     [flagsKeys.api]: 'https://api.acceptance.foleon.cloud',
@@ -57,7 +57,7 @@ export const additionalEnvs = lsGet(LsKeys.ADDITIONAL_ENVS) || [
   'anja',
   'svetlana',
   'maja',
-  'dusan',
+  'marko',
 ];
 export const localhostEditorPort = lsGet(LsKeys.LOCALHOST_EDITOR_PORT) || 8080;
 export const localhostPreviewerPort = lsGet(LsKeys.LOCALHOST_PREVIEWER_PORT) || 8081;
@@ -110,8 +110,6 @@ export const parseInfo = (tab: Tab) => {
     pubName: (title || '').split(' - ')[1] || '',
   };
 
-  console.log('Info', info);
-
   return info;
 };
 
@@ -124,8 +122,6 @@ let lsData: { [key: string]: any } = {};
 export const parseLsData = (data: typeof lsData) => {
   // we don't do anything right now, but maybe in the future...
   lsData = data;
-
-  console.log('lsData', lsData);
 
   return lsData;
 };

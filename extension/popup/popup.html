@@ -41,9 +41,6 @@
               <input id="previewBtn" type="checkbox" class="onoffswitch-checkbox" />
               <label class="onoffswitch-label" for="previewBtn"></label>
             </span>
-          </p>
-          <p>
-            <label class="lbl">Dev-Preview env</label>
             <select id="previewer"></select>
           </p>
           <p>
@@ -61,7 +58,7 @@
         <div class="card">
           <div class="cardTitle">Open in new tab...</div>
 
-          <p>
+          <p id="owAppWrap">
             <label class="lbl">Application</label>
             <select id="owApp">
               <option value="editor" selected>editor</option>
@@ -98,6 +95,13 @@
             <label class="lbl">API</label>
             <select id="owApi"></select>
           </p>
+          <p>
+            <label class="lbl">Print mode</label>
+            <span class="onoffswitch">
+              <input id="owPrint" type="checkbox" class="onoffswitch-checkbox" />
+              <label class="onoffswitch-label" for="owPrint"></label>
+            </span>
+          </p>
           <p class="pButton">
             <button id="owOpen" class="bigButton">Open in new tab</button>
             <span id="owOpenMore">...</span>
@@ -105,6 +109,22 @@
               <span id="owMoreShowUrl">Just show the URL</span>
               <span id="owMoreThisTab">Open in this tab</span>
             </span>
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="cardTitle">Favorites</div>
+          <div id="favRowsWrap">
+            <p>
+              <a href="https://editor-staging.foleon.dev/publication/96490/pages/761854" target="_blank">My test publication - 96490 - staging</a>
+              <span>x</span>
+            </p>
+            <p>
+              <a href="https://editor-staging.foleon.dev/publication/96490/pages/761854" target="_blank">Another one - 96490 - staging</a>
+            </p>
+          </div>
+          <p class="pButton">
+            <button id="favAdd" class="bigButton">Add to favorites</button>
           </p>
         </div>
       </section>
