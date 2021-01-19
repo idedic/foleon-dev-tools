@@ -97,7 +97,7 @@ export const parseInfo = (tab: Tab) => {
   const env = (() => {
     if (matchLocalEnv) return 'localhost';
     if (matchProductionEnv) return Env.PRODUCTION;
-    if (matchDevEnv) return matchDevEnv[2];
+    if (matchDevEnv) return matchDevEnv[3];
     if (matchCloudEnv) return `${matchCloudEnv[2]} cloud`;
   })();
 

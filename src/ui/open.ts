@@ -16,8 +16,10 @@ type OwData = {
 
 const hideRow = ($el: Cash) => $el.closest('p').hide();
 const showRow = ($el: Cash) => $el.closest('p').show();
+const hideRows = (rowArray: Cash[]) => rowArray.map(hideRow);
+const showRows = (rowArray: Cash[]) => rowArray.map(showRow);
 
-const getOwData = () => (lsGet(LsKeys.OW_DATA) as OwData) || {};
+const getOwData = () => (lsGet(LsKeys.OW_DATA) || {}) as OwData;
 const setOwData = (owData: OwData) => lsSet(LsKeys.OW_DATA, owData);
 
 const $owApp = $('#owApp');
@@ -49,7 +51,7 @@ const renderApisUI = () => {
 };
 
 const setOwDataUI = (info: Info) => {
-  const owData = (lsGet(LsKeys.OW_DATA) || {}) as OwData;
+  const owData = getOwData();
   $owApp.val(owData.app || App.EDITOR);
   $owEnv.val(owData.env || Env.ACCEPTANCE);
   $owPublicationId.val(info.pubId);
@@ -76,50 +78,20 @@ export const initOpen = () => {
       const app = $owApp.val();
       switch (app) {
         case App.PREVIEWER:
-          $owPageId.parent().hide();
-          $owOverlayId.parent().hide();
-          $owItemId.parent().hide();
-          $owCompositionId.parent().hide();
-
-          $owPublicationId.parent().show();
-          $owApi.parent().show();
-          showRow($owApi);
-          showRow($owPrint);
+          hideRows([$owPageId, $owOverlayId, $owItemId, $owCompositionId]);
+          showRows([$owPublicationId, $owApi, $owPrint]);
           break;
         case App.ITEM_PREVIEWER:
-          $owPublicationId.parent().hide();
-          $owPageId.parent().hide();
-          $owOverlayId.parent().hide();
-          hideRow($owApi);
-          hideRow($owPrint);
-
-          $owItemId.parent().show();
-          $owCompositionId.parent().show();
-          $owApi.parent().show();
-
+          hideRows([$owPublicationId, $owPageId, $owOverlayId, $owPrint]);
+          showRows([$owItemId, $owCompositionId, $owApi]);
           break;
         case App.EDITOR:
-          $owItemId.parent().hide();
-          $owCompositionId.parent().hide();
-          $owApi.parent().hide();
-          hideRow($owApi);
-          hideRow($owPrint);
-
-          $owPublicationId.parent().show();
-          $owPageId.parent().show();
-          $owOverlayId.parent().show();
+          hideRows([$owItemId, $owCompositionId, $owApi, $owPrint]);
+          showRows([$owPublicationId, $owPageId, $owOverlayId]);
           break;
         default:
           //DASHBOARD
-          $owItemId.parent().hide();
-          $owCompositionId.parent().hide();
-          $owApi.parent().hide();
-          hideRow($owApi);
-          hideRow($owPrint);
-
-          $owPublicationId.parent().hide();
-          $owPageId.parent().hide();
-          $owOverlayId.parent().hide();
+          hideRows([$owPageId, $owPublicationId, $owOverlayId, $owItemId, $owCompositionId, $owApi, $owPrint]);
           break;
       }
     })
