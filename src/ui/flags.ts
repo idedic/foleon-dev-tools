@@ -1,9 +1,9 @@
 import $ from 'cash-dom';
 
-import { ICurrentApp, DEFAULT, DIVIDER } from '../types';
+import { ICurrentApp, DEFAULT, DIVIDER, Api, App } from '../types';
 import { renderOption } from './tools';
 import { getApiUrl, getPreviewerRootUrl } from '../services/urls';
-import { additionalEnvs, apiKeys, apis, defaultEnvs, getLsData, flagsKeys } from '../services/data';
+import { additionalEnvs, apiKeys, apis, defaultEnvs, getLsData, flagsKeys, getInfo } from '../services/data';
 import { getActiveTab, reloadTab, sendMsgToActiveTab } from '../services/chrome';
 
 const $api = $('#api');
@@ -14,7 +14,7 @@ const $saveAndReload = $('#saveAndReload');
 
 const renderApisUI = () => {
   const apisToRender = [DEFAULT, DIVIDER, ...apis];
-  const ui = apisToRender.map((env) => renderOption(env, `<option value="${getApiUrl(env)}">${env}</option>`)).join('');
+  const ui = apisToRender.map((api) => renderOption(api, `<option value="${getApiUrl(api)}">${api}</option>`)).join('');
   $api.html(ui);
 };
 
@@ -24,19 +24,20 @@ const renderPreviewerEnvsUI = () => {
   $previewer.html(ui);
 };
 
-const showOptionsBasedOnCurrentApp = (currentApp: ICurrentApp) => {
-  if (!currentApp.isEditor) {
+const showOptionsBasedOnCurrentApp = (app: App) => {
+  if (app !== App.EDITOR) {
     $previewBtn.parent().parent().hide();
     $previewer.parent().hide();
     $debug.parent().parent().hide();
   }
 };
 
-export const initFlags = (currentApp: ICurrentApp) => {
+export const initFlags = () => {
   renderApisUI();
   renderPreviewerEnvsUI();
 
-  showOptionsBasedOnCurrentApp(currentApp);
+  const info = getInfo();
+  showOptionsBasedOnCurrentApp(info.app);
 
   const lsData = getLsData();
 

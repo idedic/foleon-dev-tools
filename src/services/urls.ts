@@ -19,6 +19,11 @@ export const getEditorRootUrl = (env: string) => {
     case Env.RELEASE_BETA:
       return `https://editor-beta.foleon.dev`;
 
+    case Env.ACCEPTANCE_CLOUD:
+      return `https://editor.acceptance.foleon.cloud`;
+    case Env.STAGING_CLOUD:
+      return `https://editor.staging.foleon.cloud`;
+
     default:
       return `https://editor-${env}.foleon.dev`;
   }
@@ -39,11 +44,18 @@ export const getPreviewerRootUrl = (env: string) => {
       return `http://localhost:${localhostPreviewerPort}`;
 
     case Env.PRODUCTION:
-    case Env.BETA:
       return `https://previewer.foleon.com`;
+    case Env.BETA:
+      return `https://previewer-beta.foleon.com`;
     case Env.RELEASE:
-    case Env.RELEASE_BETA:
       return `https://previewer.foleon.dev`;
+    case Env.RELEASE_BETA:
+      return `https://previewer-beta.foleon.dev`;
+
+    case Env.ACCEPTANCE_CLOUD:
+      return `https://previewer.acceptance.foleon.cloud`;
+    case Env.STAGING_CLOUD:
+      return `https://previewer.staging.foleon.cloud`;
 
     default:
       return `https://previewer-${env}.foleon.dev`;
@@ -78,6 +90,11 @@ export const getDashboardRootUrl = (env: string) => {
     case Env.RELEASE_BETA:
       return `https://app-beta.foleon.dev`;
 
+    case Env.ACCEPTANCE_CLOUD:
+      return `https://app.acceptance.foleon.cloud`;
+    case Env.STAGING_CLOUD:
+      return `https://app.staging.foleon.cloud`;
+
     default:
       return `https://app-${env}.foleon.dev`;
   }
@@ -93,6 +110,10 @@ export const getApiUrl = (api: string) => {
       return DEFAULT;
     case Api.PRODUCTION:
       return `https://api.foleon.com`;
+    case Api.ACCEPTANCE_CLOUD:
+      return `https://api.acceptance.foleon.cloud`;
+    case Api.STAGING_CLOUD:
+      return `https://api.staging.foleon.cloud`;
     default:
       return `https://api-${api}.foleon.dev`;
   }

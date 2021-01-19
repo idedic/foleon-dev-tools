@@ -6,27 +6,10 @@ import { initFlags } from './ui/flags';
 import { initOpen } from './ui/open';
 import { initSettings } from './ui/settings';
 
-const isUrlFoleonEditor = (url: string) => {
-  return url.includes('editor') || url.includes(`localhost:${localhostEditorPort}`);
-};
-
-const isUrlFoleonDashboard = (url: string) => {
-  return url.includes('app') || url.includes(`localhost:${localhostDashboardPort}`);
-};
-
-const isUrlFoleonPreviewer = (url: string) => {
-  return url.includes('previewer') || url.includes(`localhost:${localhostPreviewerPort}`);
-};
-
 getActiveTab((activeTab) => {
   console.log('activeTab', activeTab);
   parseInfo(activeTab);
-
-  const isEditor = isUrlFoleonEditor(activeTab.url);
-  const isDashboard = isUrlFoleonDashboard(activeTab.url);
-  const isPreviewer = isUrlFoleonPreviewer(activeTab.url);
-
-  const isFoleonApp = isEditor || isDashboard || isPreviewer;
+  const isFoleonApp = activeTab.url.match(/\/\/(localhost:|.+foleon\.(dev|com|cloud))/);
 
   if (!isFoleonApp) {
     showErrorSection([
@@ -41,10 +24,9 @@ getActiveTab((activeTab) => {
     (response) => {
       parseLsData(response);
 
-      const currentApp = { isEditor, isDashboard, isPreviewer };
       try {
-        initInfo(currentApp);
-        initFlags(currentApp);
+        initInfo();
+        initFlags();
         initOpen();
         initSettings();
 
