@@ -39,8 +39,27 @@ const $owMoreWrap = $('#owMoreWrap');
 const $owMoreShowUrl = $('#owMoreShowUrl');
 const $owMoreThisTab = $('#owMoreThisTab');
 
+const getAppOptions = (currentApp: App): App[] => {
+  switch (currentApp) {
+    case App.DASHBOARD:
+    case App.PREVIEWER:
+    case App.ITEM_PREVIEWER:
+      return [App.DASHBOARD];
+    default:
+      // App.EDITOR
+      return [App.EDITOR, App.PREVIEWER, App.ITEM_PREVIEWER, App.DASHBOARD];
+  }
+};
+
+const renderAppOptionsUI = (currentApp: App) => {
+  const appOptions = getAppOptions(currentApp);
+
+  const ui = appOptions.map((appOption, index) => renderOption(appOption)).join('');
+  $owApp.html(ui);
+};
+
 const renderOwEnvEnvsUI = () => {
-  const envs = [...defaultEnvs, DIVIDER, ...additionalEnvs, DIVIDER, LOCALHOST];
+  const envs: string[] = [...defaultEnvs, DIVIDER, ...additionalEnvs, DIVIDER, LOCALHOST];
   const ui = envs.map((env) => renderOption(env)).join('');
   $owEnv.html(ui);
 };
@@ -52,7 +71,9 @@ const renderApisUI = () => {
 
 const setOwDataUI = (info: Info) => {
   const owData = getOwData();
-  $owApp.val(owData.app || App.EDITOR);
+  const possibleApps = getAppOptions(info.app);
+  const firstPossibleApp = possibleApps.length > 0 && possibleApps[0];
+  $owApp.val(possibleApps.includes(info.app) ? info.app : firstPossibleApp);
   $owEnv.val(owData.env || Env.ACCEPTANCE);
   $owPublicationId.val(info.pubId);
   $owPageId.val(info.pageId);
@@ -67,10 +88,12 @@ const hideMoreWrapHandler = () => {
 };
 
 export const initOpen = () => {
+  const info = getInfo();
+
+  renderAppOptionsUI(info.app);
   renderOwEnvEnvsUI();
   renderApisUI();
 
-  const info = getInfo();
   setOwDataUI(info);
 
   $owApp
@@ -94,6 +117,10 @@ export const initOpen = () => {
           hideRows([$owPageId, $owPublicationId, $owOverlayId, $owItemId, $owCompositionId, $owApi, $owPrint]);
           break;
       }
+
+      // these fields will be hidden for now (looks like they will not be neccessary)
+      // TODO: remove these fields (from popup.html and this file) if they are not needed after some time
+      hideRows([$owPublicationId, $owPageId, $owOverlayId]);
     })
     .trigger('change');
 
