@@ -71,16 +71,16 @@ export const parseInfo = (tab: Tab) => {
   const { url, title } = tab;
 
   const matchLocalEnv = url.match(/\/\/localhost:(\d+)/);
-  const matchProductionEnv = url.match(/\/\/(editor|previewer|dashboard)\.foleon\.com\//);
-  const matchDevEnv = url.match(/\/\/(editor|previewer|dashboard)(-(.+))?\.foleon\.dev/);
-  const matchCloudEnv = url.match(/\/\/(editor|previewer|dashboard)\.(.+)\.foleon\.cloud\//);
+  const matchProductionEnv = url.match(/\/\/(editor|previewer|app)\.foleon\.com\//);
+  const matchDevEnv = url.match(/\/\/(editor|previewer|app)(-(.+))?\.foleon\.dev/);
+  const matchCloudEnv = url.match(/\/\/(editor|previewer|app)\.(.+)\.foleon\.cloud\//);
 
-  const checkIfFoleonApp = (app: App, localhostPort: string) => {
+  const checkIfFoleonApp = (applicationSubdomain: App.EDITOR | App.PREVIEWER | 'app', localhostPort: string) => {
     return (
       (matchLocalEnv && matchLocalEnv[1] === localhostPort) ||
-      (matchProductionEnv && matchProductionEnv[1] === app) ||
-      (matchDevEnv && matchDevEnv[1] === app) ||
-      (matchCloudEnv && matchCloudEnv[1] === app)
+      (matchProductionEnv && matchProductionEnv[1] === applicationSubdomain) ||
+      (matchDevEnv && matchDevEnv[1] === applicationSubdomain) ||
+      (matchCloudEnv && matchCloudEnv[1] === applicationSubdomain)
     );
   };
 
@@ -90,7 +90,7 @@ export const parseInfo = (tab: Tab) => {
 
   const app = (() => {
     if (checkIfFoleonApp(App.EDITOR, localhostEditorPort)) return App.EDITOR;
-    if (checkIfFoleonApp(App.DASHBOARD, localhostDashboardPort)) return App.DASHBOARD;
+    if (checkIfFoleonApp('app', localhostDashboardPort)) return App.DASHBOARD;
     if (checkIfFoleonApp(App.PREVIEWER, localhostPreviewerPort)) return App.PREVIEWER;
   })();
 
