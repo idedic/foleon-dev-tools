@@ -17,7 +17,7 @@ const $favRowsWrap = $('#favRowsWrap');
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
-export const getFavData = () => lsGet(LsKeys.FAV_DATA) as FavData;
+export const getFavData = () => (lsGet(LsKeys.FAV_DATA) as FavData) || [];
 const setFavData = (_favData: FavData) => lsSet(LsKeys.FAV_DATA, _favData);
 
 const favData = getFavData() || [];
@@ -25,7 +25,7 @@ const favData = getFavData() || [];
 const addToFavorite = () => {
   const info = getInfo();
 
-  let name = `${info.title} - ${info.pubId} - ${info.env}`;
+  let name = `${info.pubName} - ${info.pubId} - ${info.env}`;
   const promptResult = prompt('Add to favorites by name:', name);
   if (promptResult === null) {
     // when user hits cancel

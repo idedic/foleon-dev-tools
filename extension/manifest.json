@@ -9,7 +9,7 @@
   "permissions": ["activeTab"],
   "content_scripts": [
     {
-      "matches": ["*://*.foleon.dev/*", "*://*.foleon.com/*", "*://localhost/*"],
+      "matches": ["*://*.foleon.dev/*", "*://*.foleon.cloud/*", "*://*.foleon.com/*", "*://localhost/*"],
       "js": ["content/content.js"]
     }
   ],

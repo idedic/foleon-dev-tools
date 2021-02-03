@@ -1,4 +1,4 @@
-import { Api, DEFAULT, Env, Info, LsKeys, Tab } from '../types';
+import { Api, App, DEFAULT, Env, Info, LsKeys, Tab } from '../types';
 import { getApiUrl } from './urls';
 import { lsGet } from './ls';
 
@@ -23,14 +23,31 @@ export const apiKeys = {
     [flagsKeys.api]: 'https://api-staging.foleon.dev',
     [flagsKeys.auth]: 'https://auth-staging-dot-foleon-staging.appspot.com',
   },
+  [getApiUrl(Api.ACCEPTANCE_CLOUD)]: {
+    [flagsKeys.api]: 'https://api.acceptance.foleon.cloud',
+    [flagsKeys.auth]: 'https://auth.acceptance.foleon.cloud',
+  },
+  [getApiUrl(Api.STAGING_CLOUD)]: {
+    [flagsKeys.api]: 'https://api.staging.foleon.cloud',
+    [flagsKeys.auth]: 'https://auth.staging.foleon.cloud',
+  },
   [getApiUrl(DEFAULT)]: {
     [flagsKeys.api]: false,
     [flagsKeys.auth]: false,
   },
 };
 
-export const apis = [Api.PRODUCTION, Api.ACCEPTANCE, Api.STAGING];
-export const defaultEnvs = [Env.PRODUCTION, Env.BETA, Env.RELEASE, Env.RELEASE_BETA, Env.ACCEPTANCE, Env.STAGING];
+export const apis = [Api.PRODUCTION, Api.ACCEPTANCE, Api.STAGING, Api.ACCEPTANCE_CLOUD, Api.STAGING_CLOUD];
+export const defaultEnvs = [
+  Env.PRODUCTION,
+  Env.BETA,
+  Env.RELEASE,
+  Env.RELEASE_BETA,
+  Env.ACCEPTANCE,
+  Env.STAGING,
+  Env.ACCEPTANCE_CLOUD,
+  Env.STAGING_CLOUD,
+];
 export const additionalEnvs = lsGet(LsKeys.ADDITIONAL_ENVS) || [
   'arsenije',
   'zdravko',
@@ -53,24 +70,44 @@ let info: Info = {};
 export const parseInfo = (tab: Tab) => {
   const { url, title } = tab;
 
-  const matchLocal = url.match(/\/\/localhost:/);
-  const matchProduction = url.match(/\/\/editor\.foleon\.com\//);
-  const matchEnv = url.match(/\/\/editor-(.+)\.foleon\.dev\//);
+  const matchLocalEnv = url.match(/\/\/localhost:(\d+)/);
+  const matchProductionEnv = url.match(/\/\/(editor|previewer|dashboard)\.foleon\.com\//);
+  const matchDevEnv = url.match(/\/\/(editor|previewer|dashboard)(-(.+))?\.foleon\.dev/);
+  const matchCloudEnv = url.match(/\/\/(editor|previewer|dashboard)\.(.+)\.foleon\.cloud\//);
+
+  const checkIfFoleonApp = (app: App, localhostPort: string) => {
+    return (
+      (matchLocalEnv && matchLocalEnv[1] === localhostPort) ||
+      (matchProductionEnv && matchProductionEnv[1] === app) ||
+      (matchDevEnv && matchDevEnv[1] === app) ||
+      (matchCloudEnv && matchCloudEnv[1] === app)
+    );
+  };
 
   const matchPubId = url.match(/\/publication\/(\d+)/);
   const matchPageId = url.match(/\/pages\/(\d+)/);
   const matchOverlayId = url.match(/\/overlay\/(\d+)/);
 
+  const app = (() => {
+    if (checkIfFoleonApp(App.EDITOR, localhostEditorPort)) return App.EDITOR;
+    if (checkIfFoleonApp(App.DASHBOARD, localhostDashboardPort)) return App.DASHBOARD;
+    if (checkIfFoleonApp(App.PREVIEWER, localhostPreviewerPort)) return App.PREVIEWER;
+  })();
+
+  const env = (() => {
+    if (matchLocalEnv) return 'localhost';
+    if (matchProductionEnv) return Env.PRODUCTION;
+    if (matchDevEnv) return matchDevEnv[3];
+    if (matchCloudEnv) return `${matchCloudEnv[2]} cloud`;
+  })();
+
   info = {
-    env: (() => {
-      if (matchLocal) return 'localhost';
-      if (matchProduction) return Env.PRODUCTION;
-      if (matchEnv) return matchEnv[1];
-    })(),
+    app,
+    env,
     pubId: matchPubId && matchPubId[1],
     pageId: matchPageId && matchPageId[1],
     overlayId: matchOverlayId && matchOverlayId[1],
-    title: (title || '').split(' - ')[1] || '',
+    pubName: (title || '').split(' - ')[1] || '',
   };
 
   return info;
