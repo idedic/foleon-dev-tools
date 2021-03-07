@@ -2,8 +2,7 @@ import { Api, DEFAULT, Env, Info, LOCALHOST } from '../types';
 import { localhostDashboardPort, localhostEditorPort, localhostPreviewerPort } from './data';
 
 // editor
-
-export const getEditorRootUrl = (env: string) => {
+export const getEditorRootUrl = (env: string, prId?: string) => {
   switch (env) {
     case DEFAULT:
       return DEFAULT;
@@ -15,28 +14,23 @@ export const getEditorRootUrl = (env: string) => {
     case Env.BETA:
       return `https://editor-beta.foleon.com`;
     case Env.RELEASE:
-      return `https://editor.foleon.dev`;
+      return `https://editor-release.foleon.dev`;
     case Env.RELEASE_BETA:
       return `https://editor-beta.foleon.dev`;
-
-    case Env.ACCEPTANCE_CLOUD:
-      return `https://editor.acceptance.foleon.cloud`;
-    case Env.STAGING_CLOUD:
-      return `https://editor.staging.foleon.cloud`;
-
+    case Env.PR:
+      return `https://${prId}-editor.qa.staging.foleon.cloud`;
     default:
-      return `https://editor-${env}.foleon.dev`;
+      return `https://editor.${env}.foleon.cloud`;
   }
 };
 
-export const getEditorFullUrl = (env: string, publicationId: string, pageId: string, overlayId?: string) => {
+export const getEditorFullUrl = (env: string, publicationId: string, pageId: string, overlayId?: string, prId?: string) => {
   const path = `/publication/${publicationId}/pages/${pageId}${overlayId ? `/overlay/${overlayId}` : ''}`;
-  return `${getEditorRootUrl(env)}${path}`;
+  return `${getEditorRootUrl(env, prId)}${path}`;
 };
 
 // previewer
-
-export const getPreviewerRootUrl = (env: string) => {
+export const getPreviewerRootUrl = (env: string, prId?: string) => {
   switch (env) {
     case DEFAULT:
       return DEFAULT;
@@ -48,33 +42,28 @@ export const getPreviewerRootUrl = (env: string) => {
     case Env.BETA:
       return `https://previewer-beta.foleon.com`;
     case Env.RELEASE:
-      return `https://previewer.foleon.dev`;
+      return `https://previewer-release.foleon.dev`;
     case Env.RELEASE_BETA:
       return `https://previewer-beta.foleon.dev`;
-
-    case Env.ACCEPTANCE_CLOUD:
-      return `https://previewer.acceptance.foleon.cloud`;
-    case Env.STAGING_CLOUD:
-      return `https://previewer.staging.foleon.cloud`;
-
+    case Env.PR:
+      return `https://${prId}-previewer.qa.staging.foleon.cloud`;
     default:
-      return `https://previewer-${env}.foleon.dev`;
+      return `https://previewer.${env}.foleon.cloud`;
   }
 };
 
-export const getPreviewerFullUrl = (env: string, pubId: string, api: string, print?: boolean) => {
+export const getPreviewerFullUrl = (env: string, pubId: string, api: string, print?: boolean, prId?: string) => {
   const path = `/?publicationId=${pubId}&api=${api}${print ? '&_print_=1' : ''}`;
-  return `${getPreviewerRootUrl(env)}${path}`;
+  return `${getPreviewerRootUrl(env, prId)}${path}`;
 };
 
-export const getItemPreviewerFullUrl = (env: string, itemId: string, compositionId: string, api: string, screenshotHeight = 840) => {
+export const getItemPreviewerFullUrl = (env: string, itemId: string, compositionId: string, api: string, screenshotHeight = 840, prId?: string) => {
   const path = `/?itemId=${itemId}&compositionId=${compositionId}&_screenshots_=1&screenheight=${screenshotHeight}&api=${api}`;
-  return `${getPreviewerRootUrl(env)}${path}`;
+  return `${getPreviewerRootUrl(env, prId)}${path}`;
 };
 
 // dashboard
-
-export const getDashboardRootUrl = (env: string) => {
+export const getDashboardRootUrl = (env: string, prId?: string) => {
   switch (env) {
     case DEFAULT:
       return DEFAULT;
@@ -86,35 +75,26 @@ export const getDashboardRootUrl = (env: string) => {
     case Env.BETA:
       return `https://app-beta.foleon.com`;
     case Env.RELEASE:
-      return `https://app.foleon.dev`;
+      return `https://app-release.foleon.dev`;
     case Env.RELEASE_BETA:
       return `https://app-beta.foleon.dev`;
-
-    case Env.ACCEPTANCE_CLOUD:
-      return `https://app.acceptance.foleon.cloud`;
-    case Env.STAGING_CLOUD:
-      return `https://app.staging.foleon.cloud`;
-
+    case Env.PR:
+      return `https://${prId}-app.qa.staging.foleon.cloud`;
     default:
-      return `https://app-${env}.foleon.dev`;
+      return `https://app.${env}.foleon.cloud`;
   }
 };
 
-export const getDashboardFullUrl = (env: string) => getDashboardRootUrl(env);
+export const getDashboardFullUrl = getDashboardRootUrl;
 
 // api
-
 export const getApiUrl = (api: string) => {
   switch (api) {
     case DEFAULT:
       return DEFAULT;
     case Api.PRODUCTION:
       return `https://api.foleon.com`;
-    case Api.ACCEPTANCE_CLOUD:
-      return `https://api.acceptance.foleon.cloud`;
-    case Api.STAGING_CLOUD:
-      return `https://api.staging.foleon.cloud`;
     default:
-      return `https://api-${api}.foleon.dev`;
+      return `https://api.${api}.foleon.cloud`;
   }
 };

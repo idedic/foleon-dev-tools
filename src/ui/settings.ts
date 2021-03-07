@@ -1,6 +1,7 @@
 import $ from 'cash-dom';
+import { FLAGS } from '../extensionFlags';
 
-import { additionalEnvs, localhostDashboardPort, localhostEditorPort, localhostPreviewerPort } from '../services/data';
+import { additionalEnvs, flagsKeys, localhostDashboardPort, localhostEditorPort, localhostPreviewerPort } from '../services/data';
 import { lsSet } from '../services/ls';
 import { LsKeys } from '../types';
 import { showMainSection, showSettingsSection } from './tools';
@@ -17,6 +18,10 @@ const $settDashboardPort = $('#settDashboardPort');
 const $settSave = $('#settSave');
 
 export const initSettings = () => {
+  if (!FLAGS.SHOW_NAMED_ENVS) {
+    $settAdditionalEnvs.parent().hide();
+  }
+
   $settAdditionalEnvs.val(additionalEnvs.join(envsJoiner));
   $settEditorPort.val(localhostEditorPort);
   $settPreviewerPort.val(localhostPreviewerPort);

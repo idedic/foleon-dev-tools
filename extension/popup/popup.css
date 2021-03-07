@@ -169,7 +169,7 @@ p {
 }
 
 #info span {
-  color: var(--light);
+  color: var(--medium);
 }
 
 .lbl {
@@ -193,11 +193,11 @@ p {
   width: 93px;
 }
 
-#owAppWrap {
+#newTabAppWrap {
   border-bottom: 1px dashed var(--light);
   padding-bottom: var(--gutter1);
 }
-#owOpenMore {
+#newTabOpenMore {
   position: absolute;
   height: calc(100% - var(--gutter1));
   width: 32px;
@@ -211,7 +211,7 @@ p {
   text-align: center;
   cursor: pointer;
 }
-#owMoreWrap {
+#newTabMoreWrap {
   display: block;
   position: absolute;
   bottom: calc(100% - var(--gutter1) - 3px);
@@ -221,15 +221,15 @@ p {
   text-align: right;
   border-radius: var(--radius) var(--radius) 0 0;
 }
-#owMoreWrap.h {
+#newTabMoreWrap.h {
   display: none !important;
 }
-#owMoreWrap > span {
+#newTabMoreWrap > span {
   padding: var(--gutter1);
   display: block;
   cursor: pointer;
 }
-#owMoreWrap > span:hover {
+#newTabMoreWrap > span:hover {
   background-color: var(--infoBorder);
 }
 
@@ -238,7 +238,8 @@ p {
   justify-content: space-between;
 }
 
-.favRowLink, .favRowLink:visited {
+.favRowLink,
+.favRowLink:visited {
   color: var(--baseBlue);
 }
 .favRowLink:hover {
