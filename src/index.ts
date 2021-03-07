@@ -3,7 +3,7 @@ import { showErrorSection, showMainSection } from './ui/tools';
 import { flagsKeys, localhostEditorPort, localhostDashboardPort, localhostPreviewerPort, parseInfo, parseLsData } from './services/data';
 import { initInfo } from './ui/info';
 import { initFlags } from './ui/flags';
-import { initOpen } from './ui/open';
+import { initOpen } from './ui/newTab';
 import { initSettings } from './ui/settings';
 import { getFavData, initFavorites } from './ui/favorites';
 

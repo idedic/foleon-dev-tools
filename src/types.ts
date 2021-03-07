@@ -39,7 +39,7 @@ export const DIVIDER = '-';
 export const LOCALHOST = 'localhost';
 
 export enum LsKeys {
-  OW_DATA = 'owData',
+  NEW_TAB_DATA = 'newTabData',
   FAV_DATA = 'favData',
   ADDITIONAL_ENVS = 'additionalEnvs',
   LOCALHOST_EDITOR_PORT = 'localhostEditorPort',

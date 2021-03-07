@@ -8,7 +8,7 @@ import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
 import { createTab, getActiveTab, updateTab } from '../services/chrome';
 import { FLAGS } from '../extensionFlags';
 
-type OwData = {
+type NewTabData = {
   app: string;
   env: string;
   api: string;
@@ -21,26 +21,26 @@ const showRow = ($el: Cash) => $el.closest('p').show();
 const hideRows = (rowArray: Cash[]) => rowArray.map(hideRow);
 const showRows = (rowArray: Cash[]) => rowArray.map(showRow);
 
-const getOwData = () => (lsGet(LsKeys.OW_DATA) || {}) as OwData;
-const setOwData = (owData: OwData) => lsSet(LsKeys.OW_DATA, owData);
+const getNewTabData = () => (lsGet(LsKeys.NEW_TAB_DATA) || {}) as NewTabData;
+const setNewTabData = (newTabData: NewTabData) => lsSet(LsKeys.NEW_TAB_DATA, newTabData);
 
-const $owApp = $('#owApp');
-const $owEnv = $('#owEnv');
+const $newTabApp = $('#newTabApp');
+const $newTabEnv = $('#newTabEnv');
 //----- fields depending on selected app -------
-const $owPublicationId = $('#owPublicationId');
-const $owPageId = $('#owPageId');
-const $owOverlayId = $('#owOverlayId');
-const $owItemId = $('#owItemId');
-const $owCompositionId = $('#owCompositionId');
-const $owApi = $('#owApi');
-const $owPrint = $('#owPrint');
-const $owOpen = $('#owOpen');
-const $owPrId = $('#owPrId');
+const $newTabPublicationId = $('#newTabPublicationId');
+const $newTabPageId = $('#newTabPageId');
+const $newTabOverlayId = $('#newTabOverlayId');
+const $newTabItemId = $('#newTabItemId');
+const $newTabCompositionId = $('#newTabCompositionId');
+const $newTabApi = $('#newTabApi');
+const $newTabPrint = $('#newTabPrint');
+const $newTabOpen = $('#newTabOpen');
+const $newTabPrId = $('#newTabPrId');
 
-const $owOpenMore = $('#owOpenMore');
-const $owMoreWrap = $('#owMoreWrap');
-const $owMoreShowUrl = $('#owMoreShowUrl');
-const $owMoreThisTab = $('#owMoreThisTab');
+const $newTabOpenMore = $('#newTabOpenMore');
+const $newTabMoreWrap = $('#newTabMoreWrap');
+const $newTabMoreShowUrl = $('#newTabMoreShowUrl');
+const $newTabMoreThisTab = $('#newTabMoreThisTab');
 
 const getAppOptions = (currentApp: App): App[] => {
   switch (currentApp) {
@@ -58,36 +58,36 @@ const renderAppOptionsUI = (currentApp: App) => {
   const appOptions = getAppOptions(currentApp);
 
   const ui = appOptions.map((appOption, index) => renderOption(appOption)).join('');
-  $owApp.html(ui);
+  $newTabApp.html(ui);
 };
 
-const renderOwEnvEnvsUI = () => {
+const renderNewTabEnvsUI = () => {
   const envs: string[] = [...defaultEnvs, DIVIDER, ...(FLAGS.SHOW_NAMED_ENVS ? [additionalEnvs, DIVIDER] : []), LOCALHOST];
   const ui = envs.map((env) => renderOption(env)).join('');
-  $owEnv.html(ui);
+  $newTabEnv.html(ui);
 };
 
 const renderApisUI = () => {
   const ui = apis.map((api) => renderOption(api, `<option value="${getApiUrl(api)}">${api}</option>`)).join('');
-  $owApi.html(ui);
+  $newTabApi.html(ui);
 };
 
-const setOwDataUI = (info: Info) => {
-  const owData = getOwData();
+const setNewTabDataUI = (info: Info) => {
+  const newTabData = getNewTabData();
   const possibleApps = getAppOptions(info.app);
   const firstPossibleApp = possibleApps.length > 0 && possibleApps[0];
-  $owApp.val(possibleApps.includes(owData.app as App) ? owData.app : possibleApps.includes(info.app) ? info.app : firstPossibleApp);
-  $owEnv.val(owData.env || Env.ACCEPTANCE);
-  $owPrId.val(owData.prId || info.prId);
-  $owPublicationId.val(info.pubId);
-  $owPageId.val(info.pageId);
-  $owOverlayId.val(info.overlayId);
-  $owApi.val(owData.api || getApiUrl(Api.ACCEPTANCE));
-  $owPrint.prop('checked', !!owData.print || false);
+  $newTabApp.val(possibleApps.includes(newTabData.app as App) ? newTabData.app : possibleApps.includes(info.app) ? info.app : firstPossibleApp);
+  $newTabEnv.val(newTabData.env || Env.ACCEPTANCE);
+  $newTabPrId.val(newTabData.prId || info.prId);
+  $newTabPublicationId.val(info.pubId);
+  $newTabPageId.val(info.pageId);
+  $newTabOverlayId.val(info.overlayId);
+  $newTabApi.val(newTabData.api || getApiUrl(Api.ACCEPTANCE));
+  $newTabPrint.prop('checked', !!newTabData.print || false);
 };
 
 const hideMoreWrapHandler = () => {
-  $owMoreWrap.addClass('h');
+  $newTabMoreWrap.addClass('h');
   document.removeEventListener('click', hideMoreWrapHandler);
 };
 
@@ -95,66 +95,66 @@ export const initOpen = () => {
   const info = getInfo();
 
   renderAppOptionsUI(info.app);
-  renderOwEnvEnvsUI();
+  renderNewTabEnvsUI();
   renderApisUI();
 
-  setOwDataUI(info);
+  setNewTabDataUI(info);
 
-  $owApp
+  $newTabApp
     .on('change', () => {
-      const app = $owApp.val();
+      const app = $newTabApp.val();
       switch (app) {
         case App.PREVIEWER:
-          hideRows([$owPageId, $owOverlayId, $owItemId, $owCompositionId]);
-          showRows([$owPublicationId, $owApi, $owPrint]);
+          hideRows([$newTabPageId, $newTabOverlayId, $newTabItemId, $newTabCompositionId]);
+          showRows([$newTabPublicationId, $newTabApi, $newTabPrint]);
           break;
         case App.ITEM_PREVIEWER:
-          hideRows([$owPublicationId, $owPageId, $owOverlayId, $owPrint]);
-          showRows([$owItemId, $owCompositionId, $owApi]);
+          hideRows([$newTabPublicationId, $newTabPageId, $newTabOverlayId, $newTabPrint]);
+          showRows([$newTabItemId, $newTabCompositionId, $newTabApi]);
           break;
         case App.EDITOR:
-          hideRows([$owItemId, $owCompositionId, $owApi, $owPrint]);
-          showRows([$owPublicationId, $owPageId, $owOverlayId]);
+          hideRows([$newTabItemId, $newTabCompositionId, $newTabApi, $newTabPrint]);
+          showRows([$newTabPublicationId, $newTabPageId, $newTabOverlayId]);
           break;
         default:
           //DASHBOARD
-          hideRows([$owPageId, $owPublicationId, $owOverlayId, $owItemId, $owCompositionId, $owApi, $owPrint]);
+          hideRows([$newTabPageId, $newTabPublicationId, $newTabOverlayId, $newTabItemId, $newTabCompositionId, $newTabApi, $newTabPrint]);
           break;
       }
 
       // these fields will be hidden for now (looks like they will not be neccessary)
       // TODO: remove these fields (from popup.html and this file) if they are not needed after some time
       if (!FLAGS.SHOW_ADDITIONAL_FIELDS) {
-        hideRows([$owPublicationId, $owPageId, $owOverlayId]);
+        hideRows([$newTabPublicationId, $newTabPageId, $newTabOverlayId]);
       }
     })
     .trigger('change');
 
-  $owEnv
+  $newTabEnv
     .on('change', () => {
-      const env = $owEnv.val();
+      const env = $newTabEnv.val();
       switch (env) {
         case Env.PR:
-          showRows([$owPrId]);
+          showRows([$newTabPrId]);
           break;
         default:
-          hideRows([$owPrId]);
+          hideRows([$newTabPrId]);
           break;
       }
     })
     .trigger('change');
 
   const getOpenUrl = () => {
-    const app = $owApp.val() as string;
-    const env = $owEnv.val() as string;
-    const api = $owApi.val() as string;
-    const prId = $owPrId.val() as string;
-    const publicationId = $owPublicationId.val() as string;
-    const pageId = $owPageId.val() as string;
-    const overlayId = $owOverlayId.val() as string;
-    const itemId = $owItemId.val() as string;
-    const compositionId = $owCompositionId.val() as string;
-    const print = $owPrint.prop('checked');
+    const app = $newTabApp.val() as string;
+    const env = $newTabEnv.val() as string;
+    const api = $newTabApi.val() as string;
+    const prId = $newTabPrId.val() as string;
+    const publicationId = $newTabPublicationId.val() as string;
+    const pageId = $newTabPageId.val() as string;
+    const overlayId = $newTabOverlayId.val() as string;
+    const itemId = $newTabItemId.val() as string;
+    const compositionId = $newTabCompositionId.val() as string;
+    const print = $newTabPrint.prop('checked');
 
     let url = '';
 
@@ -168,27 +168,27 @@ export const initOpen = () => {
       url = getDashboardFullUrl(env, prId);
     }
 
-    setOwData({ app, env, api, prId, print });
+    setNewTabData({ app, env, api, prId, print });
 
     return url;
   };
 
-  $owOpen.on('click', () => {
+  $newTabOpen.on('click', () => {
     const url = getOpenUrl();
     createTab({ url, active: true });
     window.close();
   });
 
-  $owOpenMore.on('click', () => {
-    $owMoreWrap.removeClass('h');
+  $newTabOpenMore.on('click', () => {
+    $newTabMoreWrap.removeClass('h');
     document.addEventListener('click', hideMoreWrapHandler, true);
   });
 
-  $owMoreShowUrl.on('click', () => {
+  $newTabMoreShowUrl.on('click', () => {
     alert(getOpenUrl());
   });
 
-  $owMoreThisTab.on('click', () => {
+  $newTabMoreThisTab.on('click', () => {
     getActiveTab((activeTab) => {
       updateTab(activeTab.id, { url: getOpenUrl() });
       window.close();
