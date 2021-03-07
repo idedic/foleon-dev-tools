@@ -5,6 +5,7 @@ import { renderOption } from './tools';
 import { getApiUrl, getPreviewerRootUrl } from '../services/urls';
 import { additionalEnvs, apiKeys, apis, defaultEnvs, getLsData, flagsKeys, getInfo } from '../services/data';
 import { getActiveTab, reloadTab, sendMsgToActiveTab } from '../services/chrome';
+import { FLAGS } from '../extensionFlags';
 
 const $api = $('#api');
 const $previewBtn = $('#previewBtn');
@@ -19,7 +20,7 @@ const renderApisUI = () => {
 };
 
 const renderPreviewerEnvsUI = () => {
-  const envs = [DEFAULT, DIVIDER, ...defaultEnvs, DIVIDER, ...additionalEnvs];
+  const envs = [DEFAULT, DIVIDER, ...defaultEnvs, ...(FLAGS.SHOW_NAMED_ENVS ? [DIVIDER, ...additionalEnvs] : [])];
   const ui = envs.map((env) => renderOption(env, `<option value="${getPreviewerRootUrl(env)}">${env}</option>`)).join('');
   $previewer.html(ui);
 };
