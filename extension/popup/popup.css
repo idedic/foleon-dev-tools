@@ -169,7 +169,7 @@ p {
 }
 
 #info span {
-  color: var(--light);
+  color: var(--medium);
 }
 
 .lbl {
@@ -238,7 +238,8 @@ p {
   justify-content: space-between;
 }
 
-.favRowLink, .favRowLink:visited {
+.favRowLink,
+.favRowLink:visited {
   color: var(--baseBlue);
 }
 .favRowLink:hover {

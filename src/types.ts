@@ -1,6 +1,7 @@
 export interface Info {
   app?: App;
   env?: string;
+  prId?: string;
   pubId?: string;
   pageId?: string;
   overlayId?: string;
@@ -13,9 +14,7 @@ export type UpdateProperties = chrome.tabs.UpdateProperties;
 export enum Api {
   PRODUCTION = 'production',
   ACCEPTANCE = 'acceptance',
-  ACCEPTANCE_CLOUD = 'acceptance cloud',
   STAGING = 'staging',
-  STAGING_CLOUD = 'staging cloud',
 }
 
 export enum Env {
@@ -24,9 +23,8 @@ export enum Env {
   RELEASE = 'release',
   RELEASE_BETA = 'release beta',
   ACCEPTANCE = 'acceptance',
-  ACCEPTANCE_CLOUD = 'acceptance cloud',
   STAGING = 'staging',
-  STAGING_CLOUD = 'staging cloud',
+  PR = 'PR',
 }
 
 export enum App {

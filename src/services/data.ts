@@ -16,18 +16,10 @@ export const apiKeys = {
     [flagsKeys.auth]: 'https://auth.foleon.com',
   },
   [getApiUrl(Api.ACCEPTANCE)]: {
-    [flagsKeys.api]: 'https://api-acceptance.foleon.dev',
-    [flagsKeys.auth]: 'https://auth-acceptance-dot-foleon-staging.appspot.com',
-  },
-  [getApiUrl(Api.STAGING)]: {
-    [flagsKeys.api]: 'https://api-staging.foleon.dev',
-    [flagsKeys.auth]: 'https://auth-staging-dot-foleon-staging.appspot.com',
-  },
-  [getApiUrl(Api.ACCEPTANCE_CLOUD)]: {
     [flagsKeys.api]: 'https://api.acceptance.foleon.cloud',
     [flagsKeys.auth]: 'https://auth.acceptance.foleon.cloud',
   },
-  [getApiUrl(Api.STAGING_CLOUD)]: {
+  [getApiUrl(Api.STAGING)]: {
     [flagsKeys.api]: 'https://api.staging.foleon.cloud',
     [flagsKeys.auth]: 'https://auth.staging.foleon.cloud',
   },
@@ -37,17 +29,8 @@ export const apiKeys = {
   },
 };
 
-export const apis = [Api.PRODUCTION, Api.ACCEPTANCE, Api.STAGING, Api.ACCEPTANCE_CLOUD, Api.STAGING_CLOUD];
-export const defaultEnvs = [
-  Env.PRODUCTION,
-  Env.BETA,
-  Env.RELEASE,
-  Env.RELEASE_BETA,
-  Env.ACCEPTANCE,
-  Env.STAGING,
-  Env.ACCEPTANCE_CLOUD,
-  Env.STAGING_CLOUD,
-];
+export const apis = [Api.PRODUCTION, Api.ACCEPTANCE, Api.STAGING];
+export const defaultEnvs = [Env.PRODUCTION, Env.BETA, Env.RELEASE, Env.RELEASE_BETA, Env.ACCEPTANCE, Env.STAGING, Env.PR];
 export const additionalEnvs = lsGet(LsKeys.ADDITIONAL_ENVS) || [
   'arsenije',
   'zdravko',
@@ -73,6 +56,7 @@ export const parseInfo = (tab: Tab) => {
   const matchLocalEnv = url.match(/\/\/localhost:(\d+)/);
   const matchProductionEnv = url.match(/\/\/(editor|previewer|app)\.foleon\.com\//);
   const matchDevEnv = url.match(/\/\/(editor|previewer|app)(-(.+))?\.foleon\.dev/);
+  const matchPREnv = url.match(/\/\/(\d+)-(editor|previewer|app)\.qa\.staging\.foleon\.cloud\//);
   const matchCloudEnv = url.match(/\/\/(editor|previewer|app)\.(.+)\.foleon\.cloud\//);
 
   const checkIfFoleonApp = (applicationSubdomain: App.EDITOR | App.PREVIEWER | 'app', localhostPort: string) => {
@@ -80,6 +64,7 @@ export const parseInfo = (tab: Tab) => {
       (matchLocalEnv && matchLocalEnv[1] === localhostPort) ||
       (matchProductionEnv && matchProductionEnv[1] === applicationSubdomain) ||
       (matchDevEnv && matchDevEnv[1] === applicationSubdomain) ||
+      (matchPREnv && matchPREnv[2] === applicationSubdomain) ||
       (matchCloudEnv && matchCloudEnv[1] === applicationSubdomain)
     );
   };
@@ -98,12 +83,16 @@ export const parseInfo = (tab: Tab) => {
     if (matchLocalEnv) return 'localhost';
     if (matchProductionEnv) return Env.PRODUCTION;
     if (matchDevEnv) return matchDevEnv[3];
-    if (matchCloudEnv) return `${matchCloudEnv[2]} cloud`;
+    if (matchPREnv) return Env.PR;
+    if (matchCloudEnv) return matchCloudEnv[2];
   })();
+
+  const prId = matchPREnv ? matchPREnv[1] : undefined;
 
   info = {
     app,
     env,
+    prId,
     pubId: matchPubId && matchPubId[1],
     pageId: matchPageId && matchPageId[1],
     overlayId: matchOverlayId && matchOverlayId[1],

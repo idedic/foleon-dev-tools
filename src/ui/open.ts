@@ -6,11 +6,13 @@ import { getApiUrl, getDashboardFullUrl, getEditorFullUrl, getPreviewerFullUrl, 
 import { renderOption } from './tools';
 import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
 import { createTab, getActiveTab, updateTab } from '../services/chrome';
+import { FLAGS } from '../extensionFlags';
 
 type OwData = {
   app: string;
   env: string;
   api: string;
+  prId: string;
   print: boolean;
 };
 
@@ -33,6 +35,7 @@ const $owCompositionId = $('#owCompositionId');
 const $owApi = $('#owApi');
 const $owPrint = $('#owPrint');
 const $owOpen = $('#owOpen');
+const $owPrId = $('#owPrId');
 
 const $owOpenMore = $('#owOpenMore');
 const $owMoreWrap = $('#owMoreWrap');
@@ -59,7 +62,7 @@ const renderAppOptionsUI = (currentApp: App) => {
 };
 
 const renderOwEnvEnvsUI = () => {
-  const envs: string[] = [...defaultEnvs, DIVIDER, ...additionalEnvs, DIVIDER, LOCALHOST];
+  const envs: string[] = [...defaultEnvs, DIVIDER, ...(FLAGS.SHOW_NAMED_ENVS ? [additionalEnvs, DIVIDER] : []), LOCALHOST];
   const ui = envs.map((env) => renderOption(env)).join('');
   $owEnv.html(ui);
 };
@@ -73,8 +76,9 @@ const setOwDataUI = (info: Info) => {
   const owData = getOwData();
   const possibleApps = getAppOptions(info.app);
   const firstPossibleApp = possibleApps.length > 0 && possibleApps[0];
-  $owApp.val(possibleApps.includes(info.app) ? info.app : firstPossibleApp);
+  $owApp.val(possibleApps.includes(owData.app as App) ? owData.app : possibleApps.includes(info.app) ? info.app : firstPossibleApp);
   $owEnv.val(owData.env || Env.ACCEPTANCE);
+  $owPrId.val(owData.prId || info.prId);
   $owPublicationId.val(info.pubId);
   $owPageId.val(info.pageId);
   $owOverlayId.val(info.overlayId);
@@ -120,7 +124,23 @@ export const initOpen = () => {
 
       // these fields will be hidden for now (looks like they will not be neccessary)
       // TODO: remove these fields (from popup.html and this file) if they are not needed after some time
-      hideRows([$owPublicationId, $owPageId, $owOverlayId]);
+      if (!FLAGS.SHOW_ADDITIONAL_FIELDS) {
+        hideRows([$owPublicationId, $owPageId, $owOverlayId]);
+      }
+    })
+    .trigger('change');
+
+  $owEnv
+    .on('change', () => {
+      const env = $owEnv.val();
+      switch (env) {
+        case Env.PR:
+          showRows([$owPrId]);
+          break;
+        default:
+          hideRows([$owPrId]);
+          break;
+      }
     })
     .trigger('change');
 
@@ -128,6 +148,7 @@ export const initOpen = () => {
     const app = $owApp.val() as string;
     const env = $owEnv.val() as string;
     const api = $owApi.val() as string;
+    const prId = $owPrId.val() as string;
     const publicationId = $owPublicationId.val() as string;
     const pageId = $owPageId.val() as string;
     const overlayId = $owOverlayId.val() as string;
@@ -138,16 +159,16 @@ export const initOpen = () => {
     let url = '';
 
     if (app === App.EDITOR) {
-      url = getEditorFullUrl(env, publicationId, pageId, overlayId);
+      url = getEditorFullUrl(env, publicationId, pageId, overlayId, prId);
     } else if (app === App.PREVIEWER) {
-      url = getPreviewerFullUrl(env, publicationId, api, print);
+      url = getPreviewerFullUrl(env, publicationId, api, print, prId);
     } else if (app === App.ITEM_PREVIEWER) {
-      url = getItemPreviewerFullUrl(env, itemId, compositionId, api);
+      url = getItemPreviewerFullUrl(env, itemId, compositionId, api, undefined, prId);
     } else if (app === App.DASHBOARD) {
-      url = getDashboardFullUrl(env);
+      url = getDashboardFullUrl(env, prId);
     }
 
-    setOwData({ app, env, api, print });
+    setOwData({ app, env, api, prId, print });
 
     return url;
   };
