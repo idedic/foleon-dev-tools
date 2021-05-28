@@ -44,6 +44,7 @@ export const additionalEnvs = lsGet(LsKeys.ADDITIONAL_ENVS) || [
 ];
 export const localhostEditorPort = lsGet(LsKeys.LOCALHOST_EDITOR_PORT) || 8080;
 export const localhostPreviewerPort = lsGet(LsKeys.LOCALHOST_PREVIEWER_PORT) || 8081;
+export const localhostViewerPort = lsGet(LsKeys.LOCALHOST_VIEWER_PORT) || 3000;
 export const localhostDashboardPort = lsGet(LsKeys.LOCALHOST_DASHBOARD_PORT) || 3501;
 
 // Info

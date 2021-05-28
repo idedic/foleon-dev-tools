@@ -1,7 +1,14 @@
 import $ from 'cash-dom';
 import { FLAGS } from '../extensionFlags';
 
-import { additionalEnvs, flagsKeys, localhostDashboardPort, localhostEditorPort, localhostPreviewerPort } from '../services/data';
+import {
+  additionalEnvs,
+  flagsKeys,
+  localhostDashboardPort,
+  localhostEditorPort,
+  localhostPreviewerPort,
+  localhostViewerPort,
+} from '../services/data';
 import { lsSet } from '../services/ls';
 import { LsKeys } from '../types';
 import { showMainSection, showSettingsSection } from './tools';
@@ -14,6 +21,7 @@ const $settLink = $('#settLink');
 const $settAdditionalEnvs = $('#settAdditionalEnvs');
 const $settEditorPort = $('#settEditorPort');
 const $settPreviewerPort = $('#settPreviewerPort');
+const $settViewerPort = $('#settViewerPort');
 const $settDashboardPort = $('#settDashboardPort');
 const $settSave = $('#settSave');
 
@@ -25,6 +33,7 @@ export const initSettings = () => {
   $settAdditionalEnvs.val(additionalEnvs.join(envsJoiner));
   $settEditorPort.val(localhostEditorPort);
   $settPreviewerPort.val(localhostPreviewerPort);
+  $settViewerPort.val(localhostViewerPort);
   $settDashboardPort.val(localhostDashboardPort);
 
   $settLink.on('click', () => {
@@ -60,6 +69,11 @@ export const initSettings = () => {
     const previewerPort = ($settPreviewerPort.val() as string).trim();
     if (previewerPort) {
       lsSet(LsKeys.LOCALHOST_PREVIEWER_PORT, previewerPort);
+    }
+
+    const viewerPort = ($settViewerPort.val() as string).trim();
+    if (viewerPort) {
+      lsSet(LsKeys.LOCALHOST_VIEWER_PORT, viewerPort);
     }
 
     const dashboardPort = ($settDashboardPort.val() as string).trim();

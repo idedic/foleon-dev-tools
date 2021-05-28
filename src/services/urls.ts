@@ -1,5 +1,5 @@
 import { Api, DEFAULT, Env, Info, LOCALHOST } from '../types';
-import { localhostDashboardPort, localhostEditorPort, localhostPreviewerPort } from './data';
+import { localhostDashboardPort, localhostEditorPort, localhostPreviewerPort, localhostViewerPort } from './data';
 
 // editor
 export const getEditorRootUrl = (env: string, prId?: string) => {
@@ -60,6 +60,24 @@ export const getPreviewerFullUrl = (env: string, pubId: string, api: string, pri
 export const getItemPreviewerFullUrl = (env: string, itemId: string, compositionId: string, api: string, screenshotHeight = 840, prId?: string) => {
   const path = `/?itemId=${itemId}&compositionId=${compositionId}&_screenshots_=1&screenheight=${screenshotHeight}&api=${api}`;
   return `${getPreviewerRootUrl(env, prId)}${path}`;
+};
+
+// viewer
+export const getViewerRootUrl = (env: string) => {
+  switch (env) {
+    case DEFAULT:
+      return DEFAULT;
+    case LOCALHOST:
+      return `http://localhost:${localhostViewerPort}`;
+    // TODO add others later...
+    default:
+      return `http://viewer.${env}.foleon.cloud`;
+  }
+};
+
+export const getViewerFullUrl = (env: string, pubId: string, api: string) => {
+  const path = `/a?publicationId=${pubId}&api=${api}`;
+  return `${getViewerRootUrl(env)}${path}`;
 };
 
 // dashboard

@@ -32,6 +32,7 @@ export enum App {
   PREVIEWER = 'previewer',
   ITEM_PREVIEWER = 'item-previewer',
   DASHBOARD = 'dashboard',
+  VIEWER = 'viewer',
 }
 
 export const DEFAULT = 'default';
@@ -44,6 +45,7 @@ export enum LsKeys {
   ADDITIONAL_ENVS = 'additionalEnvs',
   LOCALHOST_EDITOR_PORT = 'localhostEditorPort',
   LOCALHOST_PREVIEWER_PORT = 'localhostPreviewerPort',
+  LOCALHOST_VIEWER_PORT = 'localhostViewerPort',
   LOCALHOST_DASHBOARD_PORT = 'localhostDashboardPort',
 }
 

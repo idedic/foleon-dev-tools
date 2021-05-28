@@ -2,7 +2,7 @@ import $, { Cash } from 'cash-dom';
 
 import { lsGet, lsSet } from '../services/ls';
 import { Api, App, DIVIDER, Env, Info, LOCALHOST, LsKeys } from '../types';
-import { getApiUrl, getDashboardFullUrl, getEditorFullUrl, getPreviewerFullUrl, getItemPreviewerFullUrl } from '../services/urls';
+import { getApiUrl, getDashboardFullUrl, getEditorFullUrl, getPreviewerFullUrl, getItemPreviewerFullUrl, getViewerFullUrl } from '../services/urls';
 import { renderOption } from './tools';
 import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
 import { createTab, getActiveTab, updateTab } from '../services/chrome';
@@ -18,8 +18,9 @@ type NewTabData = {
 
 const hideRow = ($el: Cash) => $el.closest('p').hide();
 const showRow = ($el: Cash) => $el.closest('p').show();
-const hideRows = (rowArray: Cash[]) => rowArray.map(hideRow);
-const showRows = (rowArray: Cash[]) => rowArray.map(showRow);
+const hideRows = (rowArray: Cash[]) => rowArray.forEach(hideRow);
+const showRows = (rowArray: Cash[]) => rowArray.forEach(showRow);
+const hideAllRows = () => $('.newTabRow').hide();
 
 const getNewTabData = () => (lsGet(LsKeys.NEW_TAB_DATA) || {}) as NewTabData;
 const setNewTabData = (newTabData: NewTabData) => lsSet(LsKeys.NEW_TAB_DATA, newTabData);
@@ -50,7 +51,7 @@ const getAppOptions = (currentApp: App): App[] => {
       return [App.DASHBOARD];
     default:
       // App.EDITOR
-      return [App.EDITOR, App.PREVIEWER, App.ITEM_PREVIEWER, App.DASHBOARD];
+      return [App.EDITOR, App.PREVIEWER, App.ITEM_PREVIEWER, App.DASHBOARD, App.VIEWER];
   }
 };
 
@@ -105,20 +106,25 @@ export const initOpen = () => {
       const app = $newTabApp.val();
       switch (app) {
         case App.PREVIEWER:
-          hideRows([$newTabPageId, $newTabOverlayId, $newTabItemId, $newTabCompositionId]);
-          showRows([$newTabPublicationId, $newTabApi, $newTabPrint]);
+          hideAllRows();
+          showRows([$newTabEnv, $newTabPublicationId, $newTabApi, $newTabPrint]);
+          break;
+        case App.VIEWER:
+          hideAllRows();
+          showRows([$newTabEnv, $newTabApi]);
           break;
         case App.ITEM_PREVIEWER:
-          hideRows([$newTabPublicationId, $newTabPageId, $newTabOverlayId, $newTabPrint]);
-          showRows([$newTabItemId, $newTabCompositionId, $newTabApi]);
+          hideAllRows();
+          showRows([$newTabEnv, $newTabItemId, $newTabCompositionId, $newTabApi]);
           break;
         case App.EDITOR:
-          hideRows([$newTabItemId, $newTabCompositionId, $newTabApi, $newTabPrint]);
-          showRows([$newTabPublicationId, $newTabPageId, $newTabOverlayId]);
+          hideAllRows();
+          showRows([$newTabEnv, $newTabPublicationId, $newTabPageId, $newTabOverlayId]);
           break;
         default:
           //DASHBOARD
           hideRows([$newTabPageId, $newTabPublicationId, $newTabOverlayId, $newTabItemId, $newTabCompositionId, $newTabApi, $newTabPrint]);
+          showRows([$newTabEnv]);
           break;
       }
 
@@ -162,6 +168,8 @@ export const initOpen = () => {
       url = getEditorFullUrl(env, publicationId, pageId, overlayId, prId);
     } else if (app === App.PREVIEWER) {
       url = getPreviewerFullUrl(env, publicationId, api, print, prId);
+    } else if (app === App.VIEWER) {
+      url = getViewerFullUrl(env, publicationId, api);
     } else if (app === App.ITEM_PREVIEWER) {
       url = getItemPreviewerFullUrl(env, itemId, compositionId, api, undefined, prId);
     } else if (app === App.DASHBOARD) {
