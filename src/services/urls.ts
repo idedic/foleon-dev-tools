@@ -1,5 +1,11 @@
 import { Api, DEFAULT, Env, Info, LOCALHOST } from '../types';
-import { localhostDashboardPort, localhostEditorPort, localhostPreviewerPort, localhostViewerPort } from './data';
+import {
+	localhostDashboardPort,
+	localhostEditorPort,
+	localhostNewEditorPort,
+	localhostPreviewerPort,
+	localhostViewerPort,
+} from './data';
 
 // editor
 export const getEditorRootUrl = (env: string, prId?: string) => {
@@ -27,6 +33,24 @@ export const getEditorRootUrl = (env: string, prId?: string) => {
 export const getEditorFullUrl = (env: string, publicationId: string, pageId: string, overlayId?: string, prId?: string) => {
   const path = `/publication/${publicationId}/pages/${pageId}${overlayId ? `/overlay/${overlayId}` : ''}`;
   return `${getEditorRootUrl(env, prId)}${path}`;
+};
+
+// New Editor
+export const getNewEditorRootUrl = (env: string) => {
+  switch (env) {
+    case DEFAULT:
+      return DEFAULT;
+    case LOCALHOST:
+      return `https://localhost:${localhostNewEditorPort}`;
+    // TODO add others later...
+    default:
+      return `https://editor.${env}.foleon.cloud`;
+  }
+};
+
+export const getNewEditorFullUrl = (env: string, publicationId: string, pageId: string, overlayId?: string) => {
+  const path = `/publication/${publicationId}/pages/${pageId}${overlayId ? `/overlay/${overlayId}` : ''}`;
+  return `${getNewEditorRootUrl(env)}${path}`;
 };
 
 // previewer
