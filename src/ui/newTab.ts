@@ -1,12 +1,20 @@
 import $, { Cash } from 'cash-dom';
 
-import { lsGet, lsSet } from '../services/ls';
-import { Api, App, DIVIDER, Env, Info, LOCALHOST, LsKeys } from '../types';
-import { getApiUrl, getDashboardFullUrl, getEditorFullUrl, getPreviewerFullUrl, getItemPreviewerFullUrl, getViewerFullUrl } from '../services/urls';
-import { renderOption } from './tools';
-import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
-import { createTab, getActiveTab, updateTab } from '../services/chrome';
 import { FLAGS } from '../extensionFlags';
+import { createTab, getActiveTab, updateTab } from '../services/chrome';
+import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
+import { lsGet, lsSet } from '../services/ls';
+import {
+	getApiUrl,
+	getDashboardFullUrl,
+	getEditorFullUrl,
+	getItemPreviewerFullUrl,
+	getNewEditorFullUrl,
+	getPreviewerFullUrl,
+	getViewerFullUrl,
+} from '../services/urls';
+import { Api, App, DIVIDER, Env, Info, LOCALHOST, LsKeys } from '../types';
+import { renderOption } from './tools';
 
 type NewTabData = {
   app: string;
@@ -51,7 +59,7 @@ const getAppOptions = (currentApp: App): App[] => {
       return [App.DASHBOARD];
     default:
       // App.EDITOR
-      return [App.EDITOR, App.PREVIEWER, App.ITEM_PREVIEWER, App.DASHBOARD, App.VIEWER];
+      return [App.EDITOR, App.NEW_EDITOR, App.PREVIEWER, App.ITEM_PREVIEWER, App.DASHBOARD, App.VIEWER];
   }
 };
 
@@ -121,6 +129,10 @@ export const initOpen = () => {
           hideAllRows();
           showRows([$newTabEnv, $newTabPublicationId, $newTabPageId, $newTabOverlayId]);
           break;
+        case App.NEW_EDITOR:
+          hideAllRows();
+          showRows([$newTabEnv, $newTabPublicationId, $newTabPageId, $newTabOverlayId]);
+          break;
         default:
           //DASHBOARD
           hideRows([$newTabPageId, $newTabPublicationId, $newTabOverlayId, $newTabItemId, $newTabCompositionId, $newTabApi, $newTabPrint]);
@@ -166,6 +178,8 @@ export const initOpen = () => {
 
     if (app === App.EDITOR) {
       url = getEditorFullUrl(env, publicationId, pageId, overlayId, prId);
+    } else if (app === App.NEW_EDITOR) {
+      url = getNewEditorFullUrl(env, publicationId, pageId, overlayId);
     } else if (app === App.PREVIEWER) {
       url = getPreviewerFullUrl(env, publicationId, api, print, prId);
     } else if (app === App.VIEWER) {

@@ -29,6 +29,7 @@ export enum Env {
 
 export enum App {
   EDITOR = 'editor',
+  NEW_EDITOR = 'new-editor',
   PREVIEWER = 'previewer',
   ITEM_PREVIEWER = 'item-previewer',
   DASHBOARD = 'dashboard',
@@ -44,6 +45,7 @@ export enum LsKeys {
   FAV_DATA = 'favData',
   ADDITIONAL_ENVS = 'additionalEnvs',
   LOCALHOST_EDITOR_PORT = 'localhostEditorPort',
+  LOCALHOST_NEW_EDITOR_PORT = 'localhostNewEditorPort',
   LOCALHOST_PREVIEWER_PORT = 'localhostPreviewerPort',
   LOCALHOST_VIEWER_PORT = 'localhostViewerPort',
   LOCALHOST_DASHBOARD_PORT = 'localhostDashboardPort',

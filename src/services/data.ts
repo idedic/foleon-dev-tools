@@ -1,6 +1,6 @@
 import { Api, App, DEFAULT, Env, Info, LsKeys, Tab } from '../types';
-import { getApiUrl } from './urls';
 import { lsGet } from './ls';
+import { getApiUrl } from './urls';
 
 export const flagsKeys = {
   api: 'X-Api-Override',
@@ -46,6 +46,7 @@ export const localhostEditorPort = lsGet(LsKeys.LOCALHOST_EDITOR_PORT) || 8080;
 export const localhostPreviewerPort = lsGet(LsKeys.LOCALHOST_PREVIEWER_PORT) || 8081;
 export const localhostViewerPort = lsGet(LsKeys.LOCALHOST_VIEWER_PORT) || 3000;
 export const localhostDashboardPort = lsGet(LsKeys.LOCALHOST_DASHBOARD_PORT) || 3501;
+export const localhostNewEditorPort = lsGet(LsKeys.LOCALHOST_NEW_EDITOR_PORT) || 3000;
 
 // Info
 

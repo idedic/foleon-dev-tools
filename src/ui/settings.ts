@@ -1,13 +1,14 @@
 import $ from 'cash-dom';
-import { FLAGS } from '../extensionFlags';
 
+import { FLAGS } from '../extensionFlags';
 import {
-  additionalEnvs,
-  flagsKeys,
-  localhostDashboardPort,
-  localhostEditorPort,
-  localhostPreviewerPort,
-  localhostViewerPort,
+	additionalEnvs,
+	flagsKeys,
+	localhostDashboardPort,
+	localhostEditorPort,
+	localhostNewEditorPort,
+	localhostPreviewerPort,
+	localhostViewerPort,
 } from '../services/data';
 import { lsSet } from '../services/ls';
 import { LsKeys } from '../types';
@@ -20,6 +21,7 @@ const envsJoiner = `${envsSeparator} `;
 const $settLink = $('#settLink');
 const $settAdditionalEnvs = $('#settAdditionalEnvs');
 const $settEditorPort = $('#settEditorPort');
+const $settNewEditorPort = $('#settNewEditorPort');
 const $settPreviewerPort = $('#settPreviewerPort');
 const $settViewerPort = $('#settViewerPort');
 const $settDashboardPort = $('#settDashboardPort');
@@ -32,6 +34,7 @@ export const initSettings = () => {
 
   $settAdditionalEnvs.val(additionalEnvs.join(envsJoiner));
   $settEditorPort.val(localhostEditorPort);
+  $settNewEditorPort.val(localhostNewEditorPort);
   $settPreviewerPort.val(localhostPreviewerPort);
   $settViewerPort.val(localhostViewerPort);
   $settDashboardPort.val(localhostDashboardPort);
@@ -64,6 +67,11 @@ export const initSettings = () => {
     const editorPort = ($settEditorPort.val() as string).trim();
     if (editorPort) {
       lsSet(LsKeys.LOCALHOST_EDITOR_PORT, editorPort);
+    }
+
+    const newEditorPort = ($settNewEditorPort.val() as string).trim();
+    if (newEditorPort) {
+      lsSet(LsKeys.LOCALHOST_NEW_EDITOR_PORT, newEditorPort);
     }
 
     const previewerPort = ($settPreviewerPort.val() as string).trim();
