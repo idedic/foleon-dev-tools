@@ -71,7 +71,7 @@ export const parseInfo = (tab: Tab) => {
     );
   };
 
-  const matchPubId = url.match(/\/publication\/(\d+)/);
+  const matchDocId = url.match(/\/doc\/(\d+)/);
   const matchPageId = url.match(/\/pages\/(\d+)/);
   const matchOverlayId = url.match(/\/overlay\/(\d+)/);
 
@@ -95,10 +95,10 @@ export const parseInfo = (tab: Tab) => {
     app,
     env,
     prId,
-    pubId: matchPubId && matchPubId[1],
+    docId: matchDocId && matchDocId[1],
     pageId: matchPageId && matchPageId[1],
     overlayId: matchOverlayId && matchOverlayId[1],
-    pubName: (title || '').split(' - ')[1] || '',
+    docName: (title || '').split(' - ')[1] || '',
   };
 
   return info;

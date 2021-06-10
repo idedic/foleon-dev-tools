@@ -33,7 +33,7 @@ Pin extension
 
 ### 🗂 "Info" section
 
-Just basic info about currently opened application and its content: current application, publication name, publication id, page id, and environment that you're currently on.
+Just basic info about currently opened application and its content: current application, doc name, doc id, page id, and environment that you're currently on.
 
 ### 🗂 "Current environment (flags and overrides)" section
 
@@ -57,7 +57,7 @@ If you set `default` it will remove that flag from the local storage.
 
 ### 🗂 "Open in new tab..." section
 
-Here you can open things in a new tab. You can open the Dashboard, you can open current publication in the Editor or Previewer.
+Here you can open things in a new tab. You can open the Dashboard, you can open current doc in the Editor or Previewer.
 
 First, choose which application you want to open: **Editor, Previewer or Dashboard**. Based on selected application, different fields will appear below.
 
@@ -65,18 +65,18 @@ If Editor:
 
 - you can choose the **environment**
   - keep in mind that, if that environment is not with the same API as your current, you'll need to open Foleon Dev Tools in that tab, set the API from the "Current tab" section and click "Save and reload"
-- you can fill in publication `id`, page `id` and overlay `id`
-  - publication `id` and page `id` are `required` so link can be successfully generated
-  - publication `id`, page `id` and overlay `id` are filled in based on data from current tab (empty if not available)
-- click on the "Open in new tab" button will open the publication in new tab (based on selected environment and filled in fields )
+- you can fill in doc `id`, page `id` and overlay `id`
+  - doc `id` and page `id` are `required` so link can be successfully generated
+  - doc `id`, page `id` and overlay `id` are filled in based on data from current tab (empty if not available)
+- click on the "Open in new tab" button will open the doc in new tab (based on selected environment and filled in fields )
 
 If Previewer:
 
 - you can choose the **environment**
 - you can choose the **API** (this is not available for "editor" option because we have to set the API flag in the local storage like explained above)
-- you can fill in the publication `id`
-  - publication `id` is `required`
-  - publication `id` is filled in based on data from current tab (empty if not available)
+- you can fill in the doc `id`
+  - doc `id` is `required`
+  - doc `id` is filled in based on data from current tab (empty if not available)
 
 If Dashboard:
 

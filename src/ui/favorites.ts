@@ -25,7 +25,7 @@ const favData = getFavData() || [];
 const addToFavorite = () => {
   const info = getInfo();
 
-  let name = `${info.pubName} - ${info.pubId} - ${info.env}`;
+  let name = `${info.docName} - ${info.docId} - ${info.env}`;
   const promptResult = prompt('Add to favorites by name:', name);
   if (promptResult === null) {
     // when user hits cancel

@@ -5,13 +5,13 @@ import { createTab, getActiveTab, updateTab } from '../services/chrome';
 import { additionalEnvs, apis, defaultEnvs, getInfo } from '../services/data';
 import { lsGet, lsSet } from '../services/ls';
 import {
-	getApiUrl,
-	getDashboardFullUrl,
-	getEditorFullUrl,
-	getItemPreviewerFullUrl,
-	getNewEditorFullUrl,
-	getPreviewerFullUrl,
-	getViewerFullUrl,
+  getApiUrl,
+  getDashboardFullUrl,
+  getEditorFullUrl,
+  getItemPreviewerFullUrl,
+  getNewEditorFullUrl,
+  getPreviewerFullUrl,
+  getViewerFullUrl,
 } from '../services/urls';
 import { Api, App, DIVIDER, Env, Info, LOCALHOST, LsKeys } from '../types';
 import { renderOption } from './tools';
@@ -36,7 +36,7 @@ const setNewTabData = (newTabData: NewTabData) => lsSet(LsKeys.NEW_TAB_DATA, new
 const $newTabApp = $('#newTabApp');
 const $newTabEnv = $('#newTabEnv');
 //----- fields depending on selected app -------
-const $newTabPublicationId = $('#newTabPublicationId');
+const $newTabDocId = $('#newTabDocId');
 const $newTabPageId = $('#newTabPageId');
 const $newTabOverlayId = $('#newTabOverlayId');
 const $newTabItemId = $('#newTabItemId');
@@ -88,7 +88,7 @@ const setNewTabDataUI = (info: Info) => {
   $newTabApp.val(possibleApps.includes(newTabData.app as App) ? newTabData.app : possibleApps.includes(info.app) ? info.app : firstPossibleApp);
   $newTabEnv.val(newTabData.env || Env.ACCEPTANCE);
   $newTabPrId.val(newTabData.prId || info.prId);
-  $newTabPublicationId.val(info.pubId);
+  $newTabDocId.val(info.docId);
   $newTabPageId.val(info.pageId);
   $newTabOverlayId.val(info.overlayId);
   $newTabApi.val(newTabData.api || getApiUrl(Api.ACCEPTANCE));
@@ -115,7 +115,7 @@ export const initOpen = () => {
       switch (app) {
         case App.PREVIEWER:
           hideAllRows();
-          showRows([$newTabEnv, $newTabPublicationId, $newTabApi, $newTabPrint]);
+          showRows([$newTabEnv, $newTabDocId, $newTabApi, $newTabPrint]);
           break;
         case App.VIEWER:
           hideAllRows();
@@ -127,15 +127,15 @@ export const initOpen = () => {
           break;
         case App.EDITOR:
           hideAllRows();
-          showRows([$newTabEnv, $newTabPublicationId, $newTabPageId, $newTabOverlayId]);
+          showRows([$newTabEnv, $newTabDocId, $newTabPageId, $newTabOverlayId]);
           break;
         case App.NEW_EDITOR:
           hideAllRows();
-          showRows([$newTabEnv, $newTabPublicationId, $newTabPageId, $newTabOverlayId]);
+          showRows([$newTabEnv, $newTabDocId, $newTabPageId, $newTabOverlayId]);
           break;
         default:
           //DASHBOARD
-          hideRows([$newTabPageId, $newTabPublicationId, $newTabOverlayId, $newTabItemId, $newTabCompositionId, $newTabApi, $newTabPrint]);
+          hideRows([$newTabPageId, $newTabDocId, $newTabOverlayId, $newTabItemId, $newTabCompositionId, $newTabApi, $newTabPrint]);
           showRows([$newTabEnv]);
           break;
       }
@@ -143,7 +143,7 @@ export const initOpen = () => {
       // these fields will be hidden for now (looks like they will not be neccessary)
       // TODO: remove these fields (from popup.html and this file) if they are not needed after some time
       if (!FLAGS.SHOW_ADDITIONAL_FIELDS) {
-        hideRows([$newTabPublicationId, $newTabPageId, $newTabOverlayId]);
+        hideRows([$newTabDocId, $newTabPageId, $newTabOverlayId]);
       }
     })
     .trigger('change');
@@ -167,7 +167,7 @@ export const initOpen = () => {
     const env = $newTabEnv.val() as string;
     const api = $newTabApi.val() as string;
     const prId = $newTabPrId.val() as string;
-    const publicationId = $newTabPublicationId.val() as string;
+    const docId = $newTabDocId.val() as string;
     const pageId = $newTabPageId.val() as string;
     const overlayId = $newTabOverlayId.val() as string;
     const itemId = $newTabItemId.val() as string;
@@ -177,13 +177,13 @@ export const initOpen = () => {
     let url = '';
 
     if (app === App.EDITOR) {
-      url = getEditorFullUrl(env, publicationId, pageId, overlayId, prId);
+      url = getEditorFullUrl(env, docId, pageId, overlayId, prId);
     } else if (app === App.NEW_EDITOR) {
-      url = getNewEditorFullUrl(env, publicationId, pageId, overlayId);
+      url = getNewEditorFullUrl(env, docId, pageId, overlayId);
     } else if (app === App.PREVIEWER) {
-      url = getPreviewerFullUrl(env, publicationId, api, print, prId);
+      url = getPreviewerFullUrl(env, docId, api, print, prId);
     } else if (app === App.VIEWER) {
-      url = getViewerFullUrl(env, publicationId, api);
+      url = getViewerFullUrl(env, docId, api);
     } else if (app === App.ITEM_PREVIEWER) {
       url = getItemPreviewerFullUrl(env, itemId, compositionId, api, undefined, prId);
     } else if (app === App.DASHBOARD) {

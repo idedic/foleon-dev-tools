@@ -2,10 +2,10 @@ export interface Info {
   app?: App;
   env?: string;
   prId?: string;
-  pubId?: string;
+  docId?: string;
   pageId?: string;
   overlayId?: string;
-  pubName?: string;
+  docName?: string;
 }
 
 export type Tab = chrome.tabs.Tab;

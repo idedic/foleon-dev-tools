@@ -14,8 +14,8 @@ const renderInfoUI = () => {
     ${renderInfo('application', info.app)}
     ${renderInfo('env', info.env, !Boolean(info.prId))}
     ${renderInfo('PR id', info.prId)}
-    ${renderInfo('pub name', info.pubName)}
-    ${renderInfo('pub id', info.pubId, false)}
+    ${renderInfo('doc name', info.docName)}
+    ${renderInfo('doc id', info.docId, false)}
     ${renderInfo('page id', info.pageId)}`;
   $info.html(ui);
 };

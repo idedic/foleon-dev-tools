@@ -2,13 +2,13 @@ import $ from 'cash-dom';
 
 import { FLAGS } from '../extensionFlags';
 import {
-	additionalEnvs,
-	flagsKeys,
-	localhostDashboardPort,
-	localhostEditorPort,
-	localhostNewEditorPort,
-	localhostPreviewerPort,
-	localhostViewerPort,
+  additionalEnvs,
+  flagsKeys,
+  localhostDashboardPort,
+  localhostEditorPort,
+  localhostNewEditorPort,
+  localhostPreviewerPort,
+  localhostViewerPort,
 } from '../services/data';
 import { lsSet } from '../services/ls';
 import { LsKeys } from '../types';

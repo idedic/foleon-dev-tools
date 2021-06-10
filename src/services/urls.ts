@@ -1,11 +1,5 @@
 import { Api, DEFAULT, Env, Info, LOCALHOST } from '../types';
-import {
-	localhostDashboardPort,
-	localhostEditorPort,
-	localhostNewEditorPort,
-	localhostPreviewerPort,
-	localhostViewerPort,
-} from './data';
+import { localhostDashboardPort, localhostEditorPort, localhostNewEditorPort, localhostPreviewerPort, localhostViewerPort } from './data';
 
 // editor
 export const getEditorRootUrl = (env: string, prId?: string) => {
@@ -30,12 +24,12 @@ export const getEditorRootUrl = (env: string, prId?: string) => {
   }
 };
 
-export const getEditorFullUrl = (env: string, publicationId: string, pageId: string, overlayId?: string, prId?: string) => {
-  const path = `/publication/${publicationId}/pages/${pageId}${overlayId ? `/overlay/${overlayId}` : ''}`;
+export const getEditorFullUrl = (env: string, docId: string, pageId: string, overlayId?: string, prId?: string) => {
+  const path = `/doc/${docId}/pages/${pageId}${overlayId ? `/overlay/${overlayId}` : ''}`;
   return `${getEditorRootUrl(env, prId)}${path}`;
 };
 
-// New Editor
+// new editor
 export const getNewEditorRootUrl = (env: string) => {
   switch (env) {
     case DEFAULT:
@@ -48,8 +42,8 @@ export const getNewEditorRootUrl = (env: string) => {
   }
 };
 
-export const getNewEditorFullUrl = (env: string, publicationId: string, pageId: string, overlayId?: string) => {
-  const path = `/publication/${publicationId}/pages/${pageId}${overlayId ? `/overlay/${overlayId}` : ''}`;
+export const getNewEditorFullUrl = (env: string, docId: string, pageId: string, overlayId?: string) => {
+  const path = `/doc/${docId}/pages/${pageId}${overlayId ? `/overlay/${overlayId}` : ''}`;
   return `${getNewEditorRootUrl(env)}${path}`;
 };
 
@@ -76,8 +70,8 @@ export const getPreviewerRootUrl = (env: string, prId?: string) => {
   }
 };
 
-export const getPreviewerFullUrl = (env: string, pubId: string, api: string, print?: boolean, prId?: string) => {
-  const path = `/?publicationId=${pubId}&api=${api}${print ? '&_print_=1' : ''}`;
+export const getPreviewerFullUrl = (env: string, docId: string, api: string, print?: boolean, prId?: string) => {
+  const path = `/?publicationId=${docId}&api=${api}${print ? '&_print_=1' : ''}`;
   return `${getPreviewerRootUrl(env, prId)}${path}`;
 };
 
@@ -99,8 +93,8 @@ export const getViewerRootUrl = (env: string) => {
   }
 };
 
-export const getViewerFullUrl = (env: string, pubId: string, api: string) => {
-  const path = `/a?publicationId=${pubId}&api=${api}`;
+export const getViewerFullUrl = (env: string, docId: string, api: string) => {
+  const path = `/a?publicationId=${docId}&api=${api}`;
   return `${getViewerRootUrl(env)}${path}`;
 };
 
