@@ -119,7 +119,7 @@ export const initOpen = () => {
           break;
         case App.VIEWER:
           hideAllRows();
-          showRows([$newTabEnv, $newTabApi]);
+          showRows([$newTabEnv]);
           break;
         case App.ITEM_PREVIEWER:
           hideAllRows();
@@ -183,7 +183,7 @@ export const initOpen = () => {
     } else if (app === App.PREVIEWER) {
       url = getPreviewerFullUrl(env, docId, api, print, prId);
     } else if (app === App.VIEWER) {
-      url = getViewerFullUrl(env, docId, api);
+      url = getViewerFullUrl(env, docId);
     } else if (app === App.ITEM_PREVIEWER) {
       url = getItemPreviewerFullUrl(env, itemId, compositionId, api, undefined, prId);
     } else if (app === App.DASHBOARD) {

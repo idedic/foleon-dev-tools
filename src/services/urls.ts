@@ -93,8 +93,8 @@ export const getViewerRootUrl = (env: string) => {
   }
 };
 
-export const getViewerFullUrl = (env: string, docId: string, api: string) => {
-  const path = `/a?publicationId=${docId}&api=${api}`;
+export const getViewerFullUrl = (env: string, docId: string) => {
+  const path = `/?docId=${docId}`;
   return `${getViewerRootUrl(env)}${path}`;
 };
 
